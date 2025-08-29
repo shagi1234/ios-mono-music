@@ -1,0 +1,154 @@
+/* 
+  Localizable.strings
+  Music-app
+
+  Created by Shirin on 14.12.2023.
+  
+*/
+
+"ru" = "Rus";
+"tk" = "Türkmen";
+"en" = "Iňlis";
+
+"no_connection" = "Näsazlyk ýüze çykdy";
+"refresh" = "Täzele";
+
+"songs_tab" = "Aýdymlarym";
+"home" = "Esasy";
+"home_header" = "Hoş geldiňiz";
+"home_sub_header" = "Iň gowy aýdymlaryň jemlenen ýeri";
+"top_playlists" = "Top Pleýlistler";
+"artists_of_week" = "Hepdäniň aýdymçylary";
+"new_albums" = "Täze albomlar";
+"hit_songs" = "Hitlar";
+"playlists" = "Pleýlistler";
+"top_songs" = "Top aýdymlar";
+"albums" = "Albomlar";
+"albums_and_EP" = "Albomlar & EP";
+"singles" = "Singllar";
+
+"my_playlists" = "Meniň pleýlistlerim";
+"songs" = "Aýdymlar";
+"search" = "Gözle";
+"search_history" = "Gözleg taryhy";
+"new_playlist" = "Täze pleýlist";
+"artists" = "Aýdymçylar";
+"play_next" = "Indiki edip çal";
+
+"no_playlists_saved_yet" = "No playlists saved yet";//??
+"add_playlist" = "Plaýlist goş";
+"are_you_sure_to_delete_playlist" = "Siz hakykatdan hem pleýlisti pozmak isleýänizmi?";
+"are_you_sure_to_delete_songs" = "Siz hakykatdan hem aýdymy pozmak isleýänizmi?";
+"delete" = "Pozmak";
+"play_all" = "Hemmesini çal";
+"shuffle" = "Garyşyk";
+"enter_playlist_name" = "Plaýlistiň adyny girizmek";
+"playlist_name" = "Pleýlistyň ady";
+"add" = "Goş";
+"edit" = "Üýtgetmek";
+"add_to_playlist" = "Pleýlesta goş";
+"go_to_profile" = "Aýdymçynyň sahypasy";
+"go_to_album" = "Albomy gör";
+"playlist" = "Playlist";
+"download_all_songs" = "Ähli aýdymlary ýükelemek";
+"download_all_songs_in_playlist" = "Ähli aýdymlary ýükelemek";
+"delete_all_songs_in_playlist" = "Pleýlistden ähli aýdymlary pozmak";
+"delete_playlist" = "Pleýlistden poz";
+"edit_playlist" = "Pleýlisti üýtgetmek";
+"share" = "Paýlaşmak";
+"empty" = "Hiç zat tapylmady";
+
+"errorSavingPlaylistOrItExsists" = "Plaýlisti goşmakda näsazlyk ýüze çykdy";
+"successSavingPlaylist" = "Plaýlist goşuldy";
+
+"local" = "Meniň Pleýlist";
+"top" = "Mono Pleýlist";
+"simple" = "Pleýlist";
+"album" = "Albom";
+
+"close" = "Ýapmak";
+"main_settings" = "Esasy sazlamalar";
+"add_balance" = "Öz hasabyňyzy ýeňillik bilen dolandyryň";
+"my_balance" = "Meniň hasabym";
+"contact_us" = "Bize ýazyň";
+"version" = "Wersiýa";
+"language" = "Dil";
+"payment" = "Nyrhnamalar";
+"payment_options" = "Nyrhnamalaryň içinden özüňize laýygyny saýlaň";
+"premium" = "Premium hasap";
+"month" = "aý";
+"manat" = "%d ТМТ";
+"profitable" = "tygşytly";
+"promo_card" = "Promo karty girizmek";
+"category" = "Kategoriýa";
+"welcome" = "Hoş geldiňiz";
+"enter_phone_num" = "Dowam etmek üçin telefon belgiňizi giriziň.";
+"phone_num" = "Telefon belgiňiz";
+"phone" = "Telefon belgi";
+"continue" = "Dowam et";
+"write_otp" = "SMS kody giriziň";
+"write_sms" = "Belgiňize SMS arkaly ugradylan ýörite kody giriziň.";
+"music_for_everyone" = "Music for everyone";
+"sign_up" = "Sign up and enjoy music from all over the world";
+"connect_service" = "Hyzmaty birikdir";
+"days" = "%d gün";
+"finish_registration" = "Registrasiýany tamamla";
+"add_additional_info" = "Ýörite teklipleri taýynlamak üçin goşmaça maglumatlaryňyzy giriziň";
+"enter_info" = "Maglumatlaryňyzy giriziň";
+"day" = "Gün";
+"month" = "Aý";
+"year" = "Ýyl";
+"bithday" = "Doglan senäňizi giriziň";
+"fullname" = "Doly adyňyz";
+"username" = "Ulanyjy ady";
+"choose_card" = "Kart saýlaň";
+"choose_lang" = "Dil saýlaň";
+"bank" = "Rysgal bank karty";
+"all" = "Hemmesi";
+"artist" = "Aýdymçy";
+"song" = "Aýdym";
+"clear" = "Arassala";
+"latest_release" = "Iň soňky goşulan";
+"successAdded" = "Aýdym goşuldy";
+"successDeleted" = "Aýdym pozuldy";
+"nextInQueue" = "Soňkylar";
+"manage_your_profile_easily" = "Balans doldurmak";
+"log_out" = "Çykmak";
+"playing_now" = "Häzir çalyar";
+"male" = "Yigit";
+"female" = "Zenan";
+"gender" = "Jysn";
+"noConnection" = "Internet baglanysygy yok";
+"enjoy_music" = "Reklamasyz sazyň lezzetini alyň";
+"error" = "Näsazlyk ýüze çykdy!";
+"vpn_usage_message" = "Eger-de siz VPN ýa-da proxy ulanýan bolsaňyz, olary öçürmekligi maslahat berýäris. Biziň programmamyz beýleki hyzmatlar bilen işlänok.";
+"retry_connection" = "Täzeden baglan";
+"resend_after" = "Täzeden ugratmak";
+"resend" = "Gaýtadan ugratmak";
+"downloaded" = "Yüklenenler";
+"artists" = "Artistler";
+"enter_otp_code" = "6 belgili kod";
+"promo" = "Promo kod";
+"choose_plan" = "Nyrhnamany saýlaň";
+"message" = "Ýazgy";
+"cancel" = "Aýyrmak";
+"playlistDeleted" = "Pleýlist pozuldy";
+"succesTurnDownOff" = "Ýükden çykaryldy";
+"succesTurnDownOn" = "Ýüklenme başlady";
+"get_otp" = "Dowam etmek";
+"code_entry" = "6 belgili kod:";
+"inserted" = "Indiki edip çal";
+"empty_otp" = "SMS kody giriziň";
+"confirm" = "Tassykla";
+"bank_pop_up" = "Tölegleri SMS hyzmaty birikdirilen kartlar bilen amala aşyryp bolýar";
+"send" = "Ugrat";
+"failMessage" = "Näsazlyk ýüze çykdy. Ýene synanyşyp görüň";
+"successSent" = "Habar üstünlikli ugradyldy";
+"promo_message" = "Beýle promo aksiýasy ýok";
+"subscription_ended" = "Siziň tarifyňyz gutardy";
+"choose_plan_to_continue" = "Aýdymlary diňlemek üçin özüňize laýyk tariflardan birini saýlap bilersiňiz";
+"see_plans" = "Tariflary gör";
+"earned" = "Nyrhnama üstünlikli goşuldy";
+"similar_artists" = "Meňzeş aýdymçylar";
+"similar_playlists" = "Meňzeş Pleýlistler";
+"similar_albums" = "Meňzeş Albomlar";

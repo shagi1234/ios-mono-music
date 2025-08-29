@@ -1,0 +1,151 @@
+/* 
+  Localizable.strings
+  Music-app
+
+  Created by Shirin on 14.12.2023.
+  
+*/
+
+"ru" = "Русский";
+"tk" = "Туркмeнский";
+"en" = "Английский ";
+
+"no_connection" = "Что то пошло не так";
+"refresh" = "Обновить";
+
+"songs_tab" = "Медиатека";
+"home" = "Главная";
+"home_header" = "Добро пожаловать!";
+"home_sub_header" = "Топ песни в вашем кармане!";
+"top_playlists" = "Топы";
+"artists_of_week" = "Исполнители недели";
+"new_albums" = "Новые альбомы";
+"hit_songs" = "Хиты";
+"playlists" = "Плейлисты";
+"top_songs" = "Топовые песни";
+"albums" = "Альбомы";
+"albums_and_EP" = "Альбомы & EP";
+"singles" = "Синглы";
+
+"my_playlists" = "Мои плейлисты";
+"songs" = "Песни";
+"search" = "Найти";
+"search_history" = "История поиска";
+"new_playlist" = "Новый плейлист";
+"artists" = "Исполнители";
+"play_next" = "Воспроизвести следующем";
+
+"no_playlists_saved_yet" = "Плейлисты еще не сохранены";
+"add_playlist" = "Добавить в плейлист";
+"are_you_sure_to_delete_playlist" = "Вы уверены, что хотите удалить плейлист?";
+"are_you_sure_to_delete_songs" = "Вы уверены, что хотите удалить песни?";
+"delete" = "Удалить";
+"play_all" = "Воспроизвести все";
+"shuffle" = "Перемещать";
+"enter_playlist_name" = "Введите название плейлистa";
+"playlist_name" = "Название плейлиста";
+"add" = "Добавить";
+"edit" = "Изменить";
+"add_to_playlist" = "Добавить в плейлист";
+"go_to_profile" = "Страница артиста";
+"go_to_album" = "Перейти в альбом";
+"playlist" = "Плейлист";
+"download_all_songs" = "Скачать все песни";
+"download_all_songs_in_playlist" = "Скачать все песни";
+"delete_all_songs_in_playlist" = "Удалить все песни из плейлистa";
+"delete_playlist" = "Удалить плейлист";
+"edit_playlist" = "Редактировать плейлист";
+"share" = "Поделиться";
+"empty" = "Пустой";
+
+"errorSavingPlaylistOrItExsists" = "Произошла ошибка при сохранении плейлиста или этот плейлист уже существует";
+"successSavingPlaylist" = "Добавлено в медиатеку";
+
+"local" = "Мой плейлист";
+"top" = "Mono плейлист";
+"simple" = "Плейлист";
+"album" = "Альбом";
+
+"close" = "Закрыть";
+"add_to_fav" = "Add to Favourites";
+"main_settings" = "Основные настройки";
+"add_balance" = "Управляйте своим аккаунтом";
+"my_balance" = "Мой профиль";
+"contact_us" = "Напишите нам";
+"version" = "Версия";
+"language" = "Язык системы";
+"payment" = "Oплата";
+"payment_options" = "Подписка";
+"premium" = "Премиум аккаунт";
+"manat" = "%d ТМТ";
+"promo_card" = "Введите промо код";
+"category" = "Категория";
+"welcome" = "Добро пожаловать";
+"enter_phone_num" = "Введите номер телефона для регистрации";
+"phone_num" = "Номер телефона";
+"continue" = "Продолжить";
+"write_otp" = "Потвердите номер телефона";
+"write_sms" = "Введите СМС код который был отправлен на ваш номер";
+"music_for_everyone" = "Music for everyone";
+"connect_service" = "Продолжить";
+"days" = "%d дней";
+"finish_registration" = "Завершить регистрацию";
+"add_additional_info" = "Добавьте дополнительную информацию, чтобы мы могли подготовить специальные предложения";
+"enter_info" = "Bведите данныe";
+"day" = "День";
+"month" = "Месяц";
+"year" = "Год";
+"bithday" = "Год рождение";
+"username" = "Имя пользователья";
+"choose_card" = "Bыберите карту";
+"choose_lang" = "Bыберите язык";
+"all" = "Все";
+"artist" = "Aртист";
+"song" = "Трек";
+"clear" = "Очистить";
+"successAdded" = "Трек добавлен";
+"successDeleted" = "Трек удален";
+"latest_release" = "Последний релиз";
+"nextInQueue" = "Следующие";
+"manage_your_profile_easily" = "Управляйте своим профилем";
+"log_out" = "Bыйти";
+"playing_now" = "Сейчас";
+"male" = "Mужской";
+"female" = "Женский";
+"gender" = "Пол";
+"noConnection" = "Отсутствует подключение к сети";
+"enjoy_music" = "Наслаждайся музыкой без рекламы!";
+"error" = "Ошибка при загрузки!";
+"vpn_usage_message" = "Похоже, что вы используете VPN или прокси-сервер. Пожалуйста, отключите любую из этих служб и повторите попытку, так как наше приложение не поддерживает их работу.";
+"resend_after" = "Отправить заново через";
+"resend" = "Отправить заново";
+"downloaded" = "Загруженныe";
+"artists" = "Артисты";
+"retry_connection" = "Повторить попытку подключения";
+"enter_otp_code" = "Введите специальный  6-значный код из СМС отправленный на ваш номер";
+"promo" = "Промо код";
+"choose_plan" = "Выбор тарифа";
+"message" = "Сообщение";
+"fullname" = "Полное имя";
+"cancel" = "Отмена";
+"playlistDeleted" = "Плейлист удален";
+"succesTurnDownOff" = "Разгружено";
+"succesTurnDownOn" = "Скачивание началось";
+"get_otp" = "Получить СМС с кодом";
+"code_entry" = "Ввод кода:";
+"inserted" = "Воспроизвести следующем";
+"empty_otp" = "Введите код из СМС";
+"confirm" = "Подтвердить";
+"bank_pop_up" = "Платежи можно совершать с помощью карт, подключённых к SMS-оповещению";
+"send" = "Отправить";
+"failMessage" = "Произошла ошибка. Пожалуйста, попробуйте снова";
+"successSent" = "Сообщение успешно отправлено";
+"promo_message" = "There is no such promo";
+"subscription_ended" = "Ваша подписка закончилась";
+"choose_plan_to_continue" = "Оформите подписку и наслаждайтесь своей любимой музыкой";
+"see_plans" = "Тарифы";
+"earned" = "Тариф успешно добавлен";
+"similar_artists" = "Похожие исполнители";
+"similar_playlists" = "Похожие плейлисты";
+"similar_albums" = "Похожие альбомы";
+

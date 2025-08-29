@@ -1,0 +1,161 @@
+/*
+  Localizable.strings
+  Music-app
+
+  Created by Shirin on 14.12.2023.
+  
+*/
+
+"no_connection" = "No Connection";
+"refresh" = "Refresh";
+
+"songs_tab" = "My library";
+"home" = "Home";
+"home_header" = "Welcome";
+"home_sub_header" = "All songs in one place";
+"top_playlists" = "Top Playlists";
+"artists_of_week" = "Artists of the week";
+"new_albums" = "New Albums";
+"hit_songs" = "Hit Songs";
+"playlists" = "Playlists";
+"top_songs" = "Top Songs";
+"albums" = "Albums";
+"albums_and_EP" = "Albums & EP";
+"singles" = "Singles";
+
+"my_playlists" = "My Playlists";
+"songs" = "Songs";
+"search" = "Search";
+"search_history" = "Search history";
+
+"swipe_for_more" = "Swipe for more";
+"new_playlist" = "New Playlist";
+"artists" = "Artists";
+"inserted" = "Play next";
+
+"no_playlists_saved_yet" = "No playlists saved yet";
+"add_playlist" = "Add Playlist";
+"are_you_sure_to_delete_playlist" = "Are you sure to delete playlist?";
+"are_you_sure_to_delete_songs" = "Are you sure to delete songs?";
+"delete" = "Delete";
+"play_all" = "Play all";
+"shuffle" = "Shuffle";
+"enter_playlist_name" = "Enter playlist name";
+"playlist_name" = "Playlist name";
+"add" = "Add";
+"edit" = "Edit";
+"add_to_playlist" = "Add to Playlist";
+"go_to_profile" = "See artist";
+"go_to_album" = "See album";
+"playlist" = "Playlist";
+"download_all_songs" = "Download all songs";
+"download_all_songs_in_playlist" = "Download all songs";
+"delete_all_songs_in_playlist" = "Delete all songs in playlist";
+"delete_playlist" = "Delete playlist";
+"edit_playlist" = "Edit playlist";
+"share" = "Share";
+"empty" = "Empty";
+
+"errorSavingPlaylistOrItExsists" = "Error occured while saving playlist or this playlist already exists";
+"successSavingPlaylist" = "Playlist successfully saved";
+
+"local" = "My Playlist";
+"top" = "Mono Playlist";
+"simple" = "Playlist";
+"album" = "Album";
+
+"close" = "Close";
+"add_to_fav" = "Add to Favourites";
+"main_settings" = "Main Settings";
+"add_balance" = "Manage Your Profile"; 
+"my_balance" = "My balance";
+"contact_us" = "Contact us";
+"version" = "Version";
+"language" = "Language";
+"payment" = "Tariffs";
+"payment_options" = "You can choose the tariff that suits you";
+"premium" = "Premium %d month";
+"manat" = "%d TMT";
+"promo_card" = "Enter promo code";
+"category" = "Category";
+
+"welcome" = "Welcome";
+"enter_phone_num" = "Please enter your phone number to register";
+"phone_num" = "Phone number";
+"phone" = "Phone number";
+"continue" = "Next";
+"write_otp" = "Confirm your phone number";
+"write_sms" = "Enter the SMS code that was send.";
+"music_for_everyone" = "Music for everyone";
+"sign_up" = "Sign up and enjoy music from all over the world";
+"connect_service" = "Connect the service";
+"days" = "%d days";
+"finish_registration" = "Finish registration";
+"add_additional_info" = "Enter additional information so we can prepare special offers for you";
+"enter_info" = "Enter information";
+"day" = "Day";
+"month" = "Month";
+"year" = "Year";
+"bithday" = "Year of birth";
+"fullname" = "Fullname";
+
+"delete" = "Delete";
+"choose_card" = "Choose card";
+"choose_lang" = "Choose Language";
+"all" = "All";
+"artist" = "Artists";
+"song" = "Song";
+"clear" = "Clear";
+"latest_release" = "Latest Release";
+"successAdded" = "Song successfully added";
+"successDeleted" = "Song successfully deleted";
+"nextInQueue" = "Next";
+"username" = "Username";
+
+"ru" = "Russian";
+"tk" = "Turkmen";
+"en" = "English";
+
+"manage_your_profile_easily" = "Manage Your Profile Easily";
+"log_out" = "Log out";
+"playing_now" = "Playing now";
+"male" = "Male";
+"female" = "Female";
+"gender" = "Gender";
+"noConnection" = "No connection";
+"enjoy_music" = "Enjoy music without ads!";
+"error" = "Error occured!";
+"vpn_usage_message" = "It looks like you are using a VPN or proxy server. Please disable any of these services and try again, as our application does not support their operation.";
+"resend_after" = "Resend after";
+"resend" = "Resend";
+"downloaded" = "Downloaded";
+"play_next" = "Play Next";
+"artists" = "Artists";
+"retry_connection" = "Retry connection";
+"enter_otp_code" = "Enter the special 6-digit code from the SMS sent to your phone number";
+"promo" = "Promo code";
+"choose_plan" = "Choose plan";
+"message" = "Message";
+"cancel" = "Cancel";
+"playlistDeleted" = "Playlist deleted";
+"succesTurnDownOff" = "Unloaded";
+"succesTurnDownOn" = "Download Started";
+"get_otp" = "Receive SMS with code";
+"code_entry" = "Code entry:";
+"empty_otp" = "Enter code from the SMS";
+"confirm" = "Confirm";
+"bank_pop_up" = "Payments can be made using cards linked to SMS notifications";
+"send" = "Send";
+"failMessage" = "Error occured. Please try again";
+"successSent" = "Message successfully sent";
+"promo_message" = "There is no such promo";
+"subscription_ended" = "Your subscription has ended";
+"choose_plan_to_continue" = "Subscribe and enjoy your favorite music";
+"see_plans" = "Subscriptions";
+"earned" = "Subscription successfully added";
+"similar_artists" = "Similar Artists";
+"similar_playlists" = "Similar Playlists";
+"similar_albums" = "Similar Albums";
+
+
+
