@@ -31,7 +31,7 @@ struct BaseView: App {
                 .environmentObject(coordinator)
                 .environmentObject(networkMonitor)
             } else {
-                if subsHasEnded {
+                if subsHasEnded || vm.hasSubscriptionExpired() {
                     NavigationStack(path: $coordinator.paths[0]) {
                         SubsEndView()
                             .preferredColorScheme(.dark)
@@ -40,21 +40,16 @@ struct BaseView: App {
                             }
                     }
                     .environmentObject(coordinator)
-                }else{
+                } else {
                     MainView()
                         .preferredColorScheme(.dark)
                         .environment(\.locale, .init(identifier: lang))
                         .environmentObject(networkMonitor)
-                        .onAppear{
-                            if vm.getDate() == Defaults.subsEndDate{
-                                Defaults.subsHasEnded = true
-                                Defaults.subsType = ""
-                                Defaults.subsEndDate = ""
-                            }
+                        .onAppear {
+                            vm.checkSubscriptionStatus()
                         }
-                  }
+                }
             }
         }
-        
     }
 }

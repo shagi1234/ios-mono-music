@@ -42,4 +42,49 @@ class MainVM: ObservableObject {
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: date)
     }
+    
+    func hasSubscriptionExpired() -> Bool {
+        guard !Defaults.subsEndDate.isEmpty else { return false }
+        
+        let currentDate = Date()
+        let endDate = dateFromString(Defaults.subsEndDate)
+        
+        return currentDate >= endDate
+    }
+    
+    func checkSubscriptionStatus() {
+        if hasSubscriptionExpired() {
+            DispatchQueue.main.async {
+                Defaults.subsHasEnded = true
+                Defaults.subsType = ""
+            }
+        }
+    }
+    
+    private func dateFromString(_ dateString: String) -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.date(from: dateString) ?? Date.distantPast
+    }
+}
+
+extension Defaults {
+    static var hasActiveSubscription: Bool {
+        return !subsHasEnded && !subsEndDate.isEmpty && !subsType.isEmpty
+    }
+    
+    static func daysRemainingInSubscription() -> Int {
+        guard !subsEndDate.isEmpty else { return 0 }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        guard let endDate = formatter.date(from: subsEndDate) else { return 0 }
+        
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day], from: currentDate, to: endDate)
+        
+        return max(0, components.day ?? 0)
+    }
 }
