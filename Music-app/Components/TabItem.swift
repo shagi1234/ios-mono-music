@@ -24,7 +24,7 @@ struct TabItem: View {
                 .foregroundColor(data.tag == selectedInd ? .accentColor : .white)
                 .lineLimit(1)
         }.frame(minWidth: 70, maxWidth: .infinity, minHeight: 60)
-            .onTapGesture {
+            .pressWithAnimation {
                 selectedInd = data.tag
             }
     }

@@ -33,9 +33,7 @@ struct SearchView: View {
                 .padding(20)
             
             if vm.inProgress {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                AppLoadingView()
             }
             else if vm.noConnection{
                 NoConnectionView {
@@ -59,7 +57,7 @@ struct SearchView: View {
                                         .frame(height: 34, alignment: .center)
                                         .background(item == activeTabType ? Color.accentColor : Color.bgLightBlack)
                                         .cornerRadius(3)
-                                }
+                                }.pressAnimation()
                                 .padding(.trailing, 1)
                             }
                             Spacer()
@@ -89,7 +87,7 @@ struct SearchView: View {
                                     Spacer()
                                     
                                     Text(LocalizedStringKey("clear"))
-                                        .onTapGesture {
+                                        .pressWithAnimation {
                                             vm.deleteAllHistory()
                                         }
                                 }
@@ -148,7 +146,7 @@ struct SearchView: View {
                             .multilineTextAlignment(.leading)
                         Spacer()
                         Text(LocalizedStringKey("clear"))
-                            .onTapGesture {
+                            .pressWithAnimation {
                                 vm.deleteAllHistory()
                             }
                     }
@@ -232,7 +230,7 @@ extension SearchView{
                 ForEach(artists.enumeratedArray(), id: \.offset) { ind, i in
                     ArtistGridItem(data: i)
                         .padding(.bottom, ind + 1 != artists.count ? 5 : 40)
-                        .onTapGesture {
+                        .pressWithAnimation {
                             coordinator.navigateTo(tab: 1, page: .artist(id: i.id))
                         }
                 }
@@ -259,7 +257,7 @@ extension SearchView{
                             AlbumGridItem(data: i)
                                 .padding(.leading, ind != 0 ? 0 : 20)
                                 .padding(.trailing, ind+1 != albums.count ? 0 : 40)
-                        }
+                        }.pressAnimation()
                     }
                 }
             }
@@ -290,7 +288,7 @@ extension SearchView{
                     }, drag: {
                         playervm.addUpToNext(track: i, tracklist: nil)
                     })
-                    .onTapGesture {
+                    .pressWithAnimation {
                         if networkMonitor.isConnected {
                             playervm.create(index: ind, tracks: songs, tracklist: nil)
                         }else if !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath != nil{

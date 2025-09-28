@@ -40,6 +40,7 @@ struct SettingsView: View {
                             .foregroundColor(.white)
                             .frame(width: 40, height: 40, alignment: .center)
                     })
+                    .pressAnimation()
                     Spacer()
                 }
                 .padding(.horizontal, 20)
@@ -113,7 +114,7 @@ struct SettingsView: View {
                                     .foregroundColor(.accentColor)
                             }
                             .contentShape(Rectangle())
-                            .onTapGesture{
+                            .pressWithAnimation {
                                 showLangs.toggle()
                             }
                        
@@ -297,7 +298,7 @@ struct SettingsView: View {
                             .font(.bold_16)
                             .foregroundColor(Color.bgBlack)
                     }
-                }
+                }.pressAnimation()
             }
             .padding(20)
             .frame( height: 300, alignment: .center)
@@ -353,7 +354,7 @@ extension SettingsView{
             .frame(maxWidth: .infinity)
             .background(RoundedRectangle(cornerRadius: 4)
                 .stroke(.gray.opacity(0.3), lineWidth: 1))
-        }
+        }.pressAnimation()
     }
 }
 

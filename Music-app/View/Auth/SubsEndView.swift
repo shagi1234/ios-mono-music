@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import Resolver
 
 struct SubsEndView: View {
     @EnvironmentObject var coordinator: Coordinator
+    @StateObject var playervm  = Resolver.resolve(PlayerVM.self)
+    
     var body: some View {
         ZStack{
             Image("blur")
@@ -39,6 +42,7 @@ struct SubsEndView: View {
                 
                 Spacer()
                     .frame(height: 32)
+                
                 Button{
                     coordinator.navigateTo(tab: 0, page: .subsription)
                 }label: {
@@ -51,6 +55,22 @@ struct SubsEndView: View {
                         .foregroundColor(Color.bgBlack)
                         .padding(.horizontal, 20)
                 }
+                
+                Button{
+                    Defaults.logout()
+                    playervm.clearPlayer()
+                    playervm.removeObserversFromPlayer()
+                    playervm.currentTrack = nil
+                }label: {
+                    Text(LocalizedStringKey("log_out"))
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .frame(height: 48)
+                        .background(Color.clear)
+                        .cornerRadius(4)
+                        .font(.bold_16)
+                        .foregroundColor(Color.redCustom)
+                        .padding(.horizontal, 20)
+                }.pressAnimation()
                 
                 Spacer()
                     .frame(maxHeight: .infinity)

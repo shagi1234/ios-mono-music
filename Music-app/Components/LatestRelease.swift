@@ -50,7 +50,7 @@ struct LatestRelease: View {
         .background(Color.textBlack)
         .cornerRadius(4)
         .listRowSeparator(.hidden)
-        .onTapGesture {
+        .pressWithAnimation {
             onClick()
         }
     }

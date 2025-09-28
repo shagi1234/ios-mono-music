@@ -13,6 +13,7 @@ struct SeeAllView: View {
         .init(.flexible(), spacing: 1),
         .init(.flexible(), spacing: 1)
     ]
+    
     @Environment(\.presentationMode) var presentation
     @EnvironmentObject var coordinator: Coordinator
     @StateObject var vm: SeeAllVM
@@ -29,7 +30,7 @@ struct SeeAllView: View {
                     Image(systemName: "chevron.left")
                         .foregroundColor(.white)
                         .frame(width: 40, height: 40, alignment: .center)
-                })
+                }).pressAnimation()
                 
                 Text(vm.artistName)
                     .foregroundColor(.white)
@@ -49,7 +50,7 @@ struct SeeAllView: View {
                             }, drag: {
                                 playervm.addUpToNext(track: i, tracklist: nil)
                             })
-                            .onTapGesture {
+                            .pressWithAnimation {
                                 playervm.create(index: ind, tracks: data, tracklist: nil)
                             }
                             
@@ -79,6 +80,7 @@ struct SeeAllView: View {
                                 .font(.bold_16)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.horizontal, 20)
+                            
                             LazyVGrid(columns: gridItems, content: {
                                 ForEach(data.enumeratedArray(), id: \.offset) { ind, i in
                                     Button {
@@ -90,14 +92,12 @@ struct SeeAllView: View {
                                                     vm.getData( page: vm.page + 1)
                                                 }
                                             }
-                                    }
+                                    }.pressAnimation()
                                 }
                             }
                             )
                             if vm.isLoadingPage{
-                                ProgressView()
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                    .padding(.bottom, 45)
+                                AppLoadingView()
                             }
                         }
                         Spacer()
@@ -109,8 +109,7 @@ struct SeeAllView: View {
                     vm.getData(page: vm.page)
                 }
             }else if vm.isLoadingPage{
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                AppLoadingView()
             }
             Spacer()
         }

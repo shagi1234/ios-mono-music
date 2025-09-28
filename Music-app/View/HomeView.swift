@@ -47,7 +47,7 @@ struct HomeView: View {
                                             SongItem(data: i, current: playervm.currentTrack?.id == i.id , isPlaying: playervm.isPlaying(), disabled: !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath == nil, onMore: {
                                                 playervm.bottomSheetSong = i
                                             }).frame(width: UIScreen.main.bounds.width - 80)
-                                                .onTapGesture {
+                                                .pressWithAnimation {
                                                     if networkMonitor.isConnected {
                                                         playervm.create(index: ind, tracks: data.hitSongs, tracklist: nil)
                                                     }else if !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath != nil{
@@ -73,7 +73,7 @@ struct HomeView: View {
                                         PlaylistGridItem(data: i)
                                             .padding(.leading, ind != 0 ? 0 : 20)
                                             .padding(.trailing, ind+1 != data.topPlaylists.count ? 0 : 20)
-                                    }
+                                    }.pressAnimation()
                                 }
                                 .padding(.bottom, 25)
                             }
@@ -97,7 +97,7 @@ struct HomeView: View {
                                             coordinator.navigateTo(tab: mainVm.selectedTab, page: .artist(id: i.id))
                                         } label: {
                                             ArtistGridItem(data: i)
-                                        }
+                                        }.pressAnimation()
                                     }
                                 }.padding(.horizontal, 20)
                                     .padding(.bottom, 20)
@@ -115,7 +115,7 @@ struct HomeView: View {
                                         AlbumGridItem(data: i)
                                             .padding(.leading, ind != 0 ? 0 : 20)
                                             .padding(.trailing, ind+1 != data.albums.count ? 0 : 20)
-                                    }
+                                    }.pressAnimation()
                                 }
                             } .padding(.bottom, 20)
                         }
@@ -130,7 +130,7 @@ struct HomeView: View {
                                         PlaylistGridItem(data: PlaylistModel(id: i.id, name: i.name, image: i.image, count: Int(item.playlists[ind].songsCount)))
                                             .padding(.leading, ind != 0 ? 0 : 20)
                                             .padding(.trailing, ind+1 != item.playlists.count ? 0 : 20)
-                                    }
+                                    }.pressAnimation()
                                 }
                             }
                         }
@@ -143,8 +143,7 @@ struct HomeView: View {
                         vm.getData()
                     }
                 } else if vm.inProgress {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                    AppLoadingView()
                 }
             }
             .onAppear{

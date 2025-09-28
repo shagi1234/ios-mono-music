@@ -28,7 +28,7 @@ struct SubscriptionView: View {
                     SubscriptionHeader()
                     .frame(height: 38)
                     .frame(maxWidth: .infinity, alignment: .top)
-                if !vm.inProgressSubscriptions{
+                if !vm.inProgressSubscriptions {
                     ScrollView(showsIndicators: false){
                         ForEach(vm.subsciptions.enumeratedArray(), id: \.offset){ ind, i in
                             SubscriptionCard(subs: i, selectedId: $vm.selectedId, onClick: {
@@ -70,7 +70,7 @@ struct SubscriptionView: View {
                                         Color.accentColor
                                             .cornerRadius(3)
                                     }
-                            }
+                            }.pressAnimation()
                         }
                         .foregroundColor(.textGray)
                         .padding(12)
@@ -88,12 +88,8 @@ struct SubscriptionView: View {
                                 }
                             }
                     )
-                }else{
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .scaleEffect(1.5)
-                        .padding(.top, 50)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center) 
+                } else {
+                    AppLoadingView()
                 }
             }
             .padding(.horizontal, 20)
@@ -216,7 +212,7 @@ extension SubscriptionView{
             .frame(maxWidth: .infinity)
             .background(RoundedRectangle(cornerRadius: 4)
                 .stroke(Color.bgLightBlack, lineWidth: 1))
-        }
+        }.pressAnimation()
     }
 }
 

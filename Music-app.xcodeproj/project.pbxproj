@@ -143,6 +143,13 @@
 		C0C835982AC7333600C1FFAD /* ArtistVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C835972AC7333600C1FFAD /* ArtistVM.swift */; };
 		C0CF590D2B26E10800AFDCE5 /* MarqueeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CF590C2B26E10800AFDCE5 /* MarqueeText.swift */; };
 		C0EDF90A2ADACFCF00738160 /* MyPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EDF9092ADACFCF00738160 /* MyPlaylistView.swift */; };
+		D00A4C622E84BC5000A27565 /* AppUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A4C612E84BC5000A27565 /* AppUpdateManager.swift */; };
+		D00A4C642E84BE5F00A27565 /* UpdateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A4C632E84BE5F00A27565 /* UpdateInfo.swift */; };
+		D00A4C6A2E84C62B00A27565 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A4C692E84C62B00A27565 /* BottomSheetView.swift */; };
+		D00A4C6C2E84C85600A27565 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A4C6B2E84C85600A27565 /* Tools.swift */; };
+		D00A4C702E84D4ED00A27565 /* AppLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A4C6F2E84D4E700A27565 /* AppLoadingView.swift */; };
+		D00A4C772E84D5F100A27565 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A4C762E84D5F100A27565 /* LottieView.swift */; };
+		D00A4C9F2E891A9E00A27565 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = D00A4C9E2E891A9E00A27565 /* loading.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -283,6 +290,13 @@
 		C0C835972AC7333600C1FFAD /* ArtistVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistVM.swift; sourceTree = "<group>"; };
 		C0CF590C2B26E10800AFDCE5 /* MarqueeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarqueeText.swift; sourceTree = "<group>"; };
 		C0EDF9092ADACFCF00738160 /* MyPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaylistView.swift; sourceTree = "<group>"; };
+		D00A4C612E84BC5000A27565 /* AppUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateManager.swift; sourceTree = "<group>"; };
+		D00A4C632E84BE5F00A27565 /* UpdateInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInfo.swift; sourceTree = "<group>"; };
+		D00A4C692E84C62B00A27565 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
+		D00A4C6B2E84C85600A27565 /* Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
+		D00A4C6F2E84D4E700A27565 /* AppLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLoadingView.swift; sourceTree = "<group>"; };
+		D00A4C762E84D5F100A27565 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		D00A4C9E2E891A9E00A27565 /* loading.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -323,6 +337,7 @@
 		8BB89F7B2A8B6497005F39F6 = {
 			isa = PBXGroup;
 			children = (
+				D00A4C9E2E891A9E00A27565 /* loading.json */,
 				8BB89F862A8B6497005F39F6 /* Music-app */,
 				8BB89F852A8B6497005F39F6 /* Products */,
 				FCFD00B6384B5A79C08D7925 /* Pods */,
@@ -391,6 +406,7 @@
 		8BE714D52A8B6B4000313FFB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D00A4C612E84BC5000A27565 /* AppUpdateManager.swift */,
 				8BE715052A8CD34D00313FFB /* StorageKeys.swift */,
 				C05CF0002AD5BEAF007C69B2 /* Background.swift */,
 				C05CF0022AD5BEBA007C69B2 /* TabMonitor.swift */,
@@ -403,6 +419,9 @@
 		8BE714D62A8B6B4600313FFB /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				D00A4C762E84D5F100A27565 /* LottieView.swift */,
+				D00A4C6F2E84D4E700A27565 /* AppLoadingView.swift */,
+				D00A4C692E84C62B00A27565 /* BottomSheetView.swift */,
 				7123BA362E1E331400E38E29 /* CircularArtistItem.swift */,
 				C099BE1F2B26E2740049B585 /* Drawer */,
 				C0271F9D2AC0BEF500B21857 /* AirplayView.swift */,
@@ -442,6 +461,7 @@
 		8BE714D72A8B6B5100313FFB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D00A4C632E84BE5F00A27565 /* UpdateInfo.swift */,
 				55DE215E2C79D5240010E2D2 /* AppDelegate.swift */,
 				8BB89F872A8B6497005F39F6 /* BaseView.swift */,
 				C0C8359A2AC7334600C1FFAD /* Auth */,
@@ -465,6 +485,7 @@
 		8BE714D82A8B6B6100313FFB /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				D00A4C6B2E84C85600A27565 /* Tools.swift */,
 				C0C835992AC7333D00C1FFAD /* Auth */,
 				8BE715302A8E602B00313FFB /* MainVM.swift */,
 				8BE714F32A8B93BA00313FFB /* HomeVM.swift */,
@@ -682,6 +703,7 @@
 				C099BE2B2B2AA89B0049B585 /* Localizable.strings in Resources */,
 				550803042CACCCFB00417BBA /* NeueMachina-Ultrabold.otf in Resources */,
 				8BB89F8C2A8B6498005F39F6 /* Assets.xcassets in Resources */,
+				D00A4C9F2E891A9E00A27565 /* loading.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,13 +740,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Music-app/Pods-Music-app-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Music-app/Pods-Music-app-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -775,12 +793,14 @@
 				8BE714F22A8B939500313FFB /* OtpVM.swift in Sources */,
 				C05CF0032AD5BEBA007C69B2 /* TabMonitor.swift in Sources */,
 				8BE714E82A8B710600313FFB /* MainView.swift in Sources */,
+				D00A4C702E84D4ED00A27565 /* AppLoadingView.swift in Sources */,
 				555F64062BA78C9F00A5C03F /* PlayerVM.swift in Sources */,
 				C099BE272B26E28E0049B585 /* Drawer+Drag.swift in Sources */,
 				C0CF590D2B26E10800AFDCE5 /* MarqueeText.swift in Sources */,
 				C0EDF90A2ADACFCF00738160 /* MyPlaylistView.swift in Sources */,
 				C078E5D12ABCB027008A8298 /* AppDatabase.swift in Sources */,
 				8BE714DE2A8B6E8F00313FFB /* Font.swift in Sources */,
+				D00A4C622E84BC5000A27565 /* AppUpdateManager.swift in Sources */,
 				554145872BF804830049E66B /* PopUpModel.swift in Sources */,
 				C00158042AF7A4FC00F7CA16 /* PlaylistDB.swift in Sources */,
 				8BE7152D2A8E5A0D00313FFB /* AddPlaylistView.swift in Sources */,
@@ -820,13 +840,16 @@
 				55513D1B2C66D88300EE05D1 /* ContactUsView.swift in Sources */,
 				8BE715292A8E599D00313FFB /* MyPlaylistsHeader.swift in Sources */,
 				55DC02102CB0C502005AFC55 /* SubscriptionView.swift in Sources */,
+				D00A4C6C2E84C85600A27565 /* Tools.swift in Sources */,
 				C061C49A2AD9A1530021FE5E /* PlaylistWithSongsModel.swift in Sources */,
 				55E1D1CA2B92A29B002E8B89 /* LatestRelease.swift in Sources */,
 				8BE714E42A8B708400313FFB /* Enums.swift in Sources */,
+				D00A4C6A2E84C62B00A27565 /* BottomSheetView.swift in Sources */,
 				8BB89F882A8B6497005F39F6 /* BaseView.swift in Sources */,
 				8BA7CF482A90D0D8008E0E46 /* View.swift in Sources */,
 				C0ABBD672B5ED7D20029605C /* PlayingAnimatedView.swift in Sources */,
 				555ED7A92C4A344600B8DF80 /* RegisterPaymentModel.swift in Sources */,
+				D00A4C642E84BE5F00A27565 /* UpdateInfo.swift in Sources */,
 				C078E5CF2ABCB020008A8298 /* Persistance.swift in Sources */,
 				555F36682C48FC9600B3764C /* SongService.swift in Sources */,
 				8BE715232A8E363200313FFB /* ArtistGridItem.swift in Sources */,
@@ -852,6 +875,7 @@
 				8BE715062A8CD34D00313FFB /* StorageKeys.swift in Sources */,
 				8BE715312A8E602B00313FFB /* MainVM.swift in Sources */,
 				555D145F2BB4D7D000A9B119 /* RegisterVM.swift in Sources */,
+				D00A4C772E84D5F100A27565 /* LottieView.swift in Sources */,
 				C099BE282B26E2910049B585 /* Drawer+Computed.swift in Sources */,
 				8BE715372A8F68CF00313FFB /* TabItem.swift in Sources */,
 				554AD1FB2CB21699002EE979 /* PaymentMethod.swift in Sources */,
@@ -1005,9 +1029,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Music-app/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = QJ8L822NU6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Music-app/Info.plist";
@@ -1026,8 +1050,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mono.musictest;
+				MARKETING_VERSION = 1.7;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mono-music";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1046,9 +1070,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Music-app/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = QJ8L822NU6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Music-app/Info.plist";
@@ -1067,8 +1091,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mono.musictest;
+				MARKETING_VERSION = 1.7;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mono-music";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

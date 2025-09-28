@@ -216,7 +216,7 @@ struct MainView: View {
                             .frame(width: 30, height: 30)
                         Image("xmark")
                     }
-                }
+                }.pressAnimation()
                 .frame(maxWidth: .infinity,  alignment: .trailing)
                 .padding(.top, 20)
                 
@@ -229,6 +229,7 @@ struct MainView: View {
                     .foregroundColor(.textGray)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 16)
+                
                 Button(action: {
                     vpnConnected.toggle()
                 }) {
@@ -239,7 +240,7 @@ struct MainView: View {
                         .cornerRadius(4)
                         .font(.bold_16)
                         .foregroundColor(Color.bgBlack)
-                }
+                }.pressAnimation()
                 .padding(.top, 32)
             }
             .frame(maxHeight: .infinity, alignment: .top)
@@ -367,7 +368,8 @@ struct MainView: View {
                         .frame(height: 50)
                         .background(Color.accentColor)
                         .cornerRadius(5)
-                }
+                }.pressAnimation()
+                
                 Spacer()
                 
                 Button {
@@ -380,7 +382,7 @@ struct MainView: View {
                         .frame(maxWidth: .infinity, idealHeight: 50, maxHeight: 50, alignment: .center)
                         .background(Color("DarkBlue"))
                         .cornerRadius(4)
-                }
+                }.pressAnimation()
             }
             .padding(.horizontal, 20)
             .frame(maxWidth: .infinity, maxHeight: .infinity)

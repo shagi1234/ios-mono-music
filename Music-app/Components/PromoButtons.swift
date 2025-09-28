@@ -38,7 +38,7 @@ struct PromoButtons: View{
         }.frame(height: 37)
             .listRowBackground(Color.bgBlack)
             .contentShape(Rectangle())
-            .onTapGesture {
+            .pressWithAnimation {
                 onClick()
             }
     }

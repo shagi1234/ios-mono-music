@@ -272,7 +272,7 @@ struct MoreView: View {
                     .frame(maxWidth: .infinity, idealHeight: 50, maxHeight: 50, alignment: .center)
                     .background(Color("DarkBlue"))
                     .cornerRadius(4)
-            }
+            }.pressAnimation()
            
         }
         .offset(x: 0, y: offset)

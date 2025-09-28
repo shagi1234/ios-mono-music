@@ -13,11 +13,23 @@ extension View {
         when shouldShow: Bool,
         alignment: Alignment = .leading,
         @ViewBuilder placeholder: () -> Content) -> some View {
-
-        ZStack(alignment: alignment) {
-            placeholder().opacity(shouldShow ? 1 : 0)
-            self
+            
+            ZStack(alignment: alignment) {
+                placeholder().opacity(shouldShow ? 1 : 0)
+                self
+            }
         }
+    var safeArea: UIEdgeInsets {
+        if #available(iOS 15.0, *) {
+            if let safeArea = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.keyWindow?.safeAreaInsets {
+                return safeArea
+            }
+        } else {
+            if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
+                return window.safeAreaInsets
+            }
+        }
+        return .zero
     }
 }
 
@@ -45,9 +57,9 @@ public extension View {
     func animationObserver<Value: VectorArithmetic>(for value: Value,
                                                     onChange: ((Value) -> Void)? = nil,
                                                     onComplete: (() -> Void)? = nil) -> some View {
-      self.modifier(AnimationObserverModifier(for: value,
-                                                 onChange: onChange,
-                                                 onComplete: onComplete))
+        self.modifier(AnimationObserverModifier(for: value,
+                                                onChange: onChange,
+                                                onComplete: onComplete))
     }
 }
 
@@ -57,3 +69,89 @@ extension View {
             .onPreferenceChange(SizePreferenceKey.self, perform: action)
     }
 }
+struct ScrollFriendlyButtonModifier: ViewModifier {
+    @State private var isPressed = false
+    
+    func body(content: Content) -> some View {
+        content
+            .scaleEffect(isPressed ? 0.97 : 1)
+            .opacity(isPressed ? 0.9 : 1)
+            .animation(.easeInOut(duration: 0.15), value: isPressed)
+            .simultaneousGesture(
+                DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                    .onChanged { _ in
+                        if !isPressed {
+                            let impactFeedback = UIImpactFeedbackGenerator(style: .soft)
+                            impactFeedback.impactOccurred()
+                            
+                            withAnimation(.easeInOut(duration: 0.15)) {
+                                isPressed = true
+                            }
+                        }
+                    }
+                    .onEnded { value in
+                        withAnimation(.easeInOut(duration: 0.15)) {
+                            isPressed = false
+                        }
+                        
+                        // Only allow button press if drag distance is very small
+                        let distance = sqrt(pow(value.translation.width, 2) + pow(value.translation.height, 2))
+                        if distance > 10 {
+                            // Prevent button action on scroll by consuming the gesture
+                        }
+                    }
+            )
+    }
+}
+
+extension Button {
+    func pressAnimation() -> some View {
+        self
+            .buttonStyle(PlainButtonStyle())
+            .modifier(ScrollFriendlyButtonModifier())
+    }
+}
+
+struct ScrollFriendlyPressModifier: ViewModifier {
+    let action: () -> Void
+    @State private var isPressed = false
+    
+    func body(content: Content) -> some View {
+        content
+            .scaleEffect(isPressed ? 0.97 : 1)
+            .opacity(isPressed ? 0.9 : 1)
+            .animation(.easeInOut(duration: 0.15), value: isPressed)
+            .simultaneousGesture(
+                DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                    .onChanged { _ in
+                        if !isPressed {
+                            let impactFeedback = UIImpactFeedbackGenerator(style: .soft)
+                            impactFeedback.impactOccurred()
+                            
+                            withAnimation(.easeInOut(duration: 0.15)) {
+                                isPressed = true
+                            }
+                        }
+                    }
+                    .onEnded { value in
+                        withAnimation(.easeInOut(duration: 0.15)) {
+                            isPressed = false
+                        }
+                        
+                        let distance = sqrt(pow(value.translation.width, 2) + pow(value.translation.height, 2))
+                        if distance <= 10 {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                action()
+                            }
+                        }
+                    }
+            )
+    }
+}
+
+extension View {
+    func pressWithAnimation(_ action: @escaping () -> Void) -> some View {
+        return self.modifier(ScrollFriendlyPressModifier(action: action))
+    }
+}
+

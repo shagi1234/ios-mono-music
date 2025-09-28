@@ -31,7 +31,6 @@ class PlayerVM: NSObject, ObservableObject {
     var audioSessionActivated = false
     var lastPlayedIndex: Int?
     @Published var playNextQueue = [SongModel]()
-//    @Published var availableDuration : Double = 0.0
     @Published var inserted: Bool = false
     private var cancellables = Set<AnyCancellable>()
     @Published var success: Bool = false
@@ -45,7 +44,9 @@ class PlayerVM: NSObject, ObservableObject {
     private var cancellable: AnyCancellable?
     var c = true;
     
-    
+    // FIX: Add delayed task management
+    private var delayedPlayTask: DispatchWorkItem?
+    private var isPlayingTransition = false
     
     init(songService: SongServiceProtocol) {
         self.songService = songService
@@ -55,21 +56,38 @@ class PlayerVM: NSObject, ObservableObject {
     }
     
     func create(index: Int, tracks: [SongModel], tracklist: PlaylistModel?) {
+        // FIX: Cancel any pending delayed tasks
+        delayedPlayTask?.cancel()
+        isPlayingTransition = false
+        
         self.data = tracks
         self.playlist = tracklist
-        
         self.shuffled = false
-     
+        
         playAtIndex(index)
     }
     
-  
-    
     func playAtIndex(_ index: Int, playImmediately: Bool = true) {
-        guard index < data.count && index >= 0 else { return }
+        // FIX: Prevent multiple rapid calls
+        guard !isPlayingTransition else {
+            print("Blocking rapid playAtIndex call - transition in progress")
+            return
+        }
+        
+        guard index < data.count && index >= 0 else {
+            print("Invalid index: \(index), data.count: \(data.count)")
+            return
+        }
         
         let items = getAudioItems(data: data)
-        guard index <= items.count - 1 else { return }
+        guard index <= items.count - 1 else {
+            print("Index exceeds audio items count")
+            return
+        }
+        
+        // FIX: Cancel any existing delayed task
+        delayedPlayTask?.cancel()
+        delayedPlayTask = nil
         
         let localPath = data[index].localPath
         var url: URL
@@ -77,44 +95,62 @@ class PlayerVM: NSObject, ObservableObject {
         if let localPath = localPath, let localURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(localPath), FileManager.default.fileExists(atPath: localURL.path) {
             url = localURL
         } else {
-            guard let remoteURL = URL(string: data[index].audio) else { return }
+            guard let remoteURL = URL(string: data[index].audio) else {
+                print("Invalid audio URL for track: \(data[index].name)")
+                return
+            }
             url = remoteURL
         }
         
-        
         self.currentTrackId = self.data[index].id
         
-      
+        // FIX: Update state immediately for all UI components
+        self.playIndex = index
+        self.currentTrack = self.data[index]
+        
         self.clearPlayer()
         self.publisher.send((0, 0))
         self.loaderpublisher.send(0)
         let playerItem = AVPlayerItem(url: url)
         addObservers(for: playerItem)
-     
         
         if !playImmediately {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            // FIX: Set transition flag and use cancellable delayed task
+            isPlayingTransition = true
+            
+            let workItem = DispatchWorkItem { [weak self] in
+                guard let self = self else { return }
+                
+                // Check if this specific task is still the current one
+                guard self.delayedPlayTask != nil && !self.delayedPlayTask!.isCancelled else {
+                    print("Delayed playAtIndex task was cancelled")
+                    self.isPlayingTransition = false
+                    return
+                }
+                
                 self.createPlayer(with: playerItem)
-                self.playIndex = index
-                self.currentTrack = self.data[index]
                 self.play()
+                self.isPlayingTransition = false
+                
                 NotificationCenter.default.post(name: NSNotification.Name("PlayerNewTrackWillPlay"), object: nil)
                 self.setupNowPlayingInfo()
             }
-        }else{
+            
+            self.delayedPlayTask = workItem
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: workItem)
+            
+        } else {
+            // FIX: Immediate execution
+            isPlayingTransition = true
+            
             self.createPlayer(with: playerItem)
-            self.playIndex = index
-            self.currentTrack = self.data[index]
             self.play()
+            self.isPlayingTransition = false
+            
             NotificationCenter.default.post(name: NSNotification.Name("PlayerNewTrackWillPlay"), object: nil)
             setupNowPlayingInfo()
         }
-  
-        
-     
     }
-    
-    
     
     private func setupAudioSessionInterruptionObserver() {
         NotificationCenter.default.publisher(for: AVAudioSession.interruptionNotification)
@@ -142,11 +178,7 @@ class PlayerVM: NSObject, ObservableObject {
             .store(in: &cancellables)
     }
     
-    
-    
-    
     private func createPlayer(with item: AVPlayerItem) {
-        
         audioPlayer = AVPlayer(playerItem: item)
         if #available(iOS 10.0, *) {
             audioPlayer?.automaticallyWaitsToMinimizeStalling = false
@@ -154,7 +186,6 @@ class PlayerVM: NSObject, ObservableObject {
         addObserversForPlayer()
     }
     
-
     func addUpToNext(track: SongModel, tracklist: PlaylistModel?) {
         if audioPlayer == nil || data.count <= playIndex {
             create(index: 0, tracks: [track], tracklist: tracklist)
@@ -170,12 +201,10 @@ class PlayerVM: NSObject, ObservableObject {
         }
     }
     
-    
     func addObservers(for item: AVPlayerItem) {
         item.addObserver(self, forKeyPath: "loadedTimeRanges", options: .new, context: nil)
         item.addObserver(self, forKeyPath: "status", options: .new, context: nil)
     }
-    
     
     func addObserversForPlayer() {
         audioPlayer?.addObserver(self, forKeyPath: "rate", options: .new, context: nil)
@@ -192,7 +221,6 @@ class PlayerVM: NSObject, ObservableObject {
             guard duration.isFinite else { return }
           
             self.publisher.send((currentTime, duration))
-           
         }
         self.setupNowPlayingInfo()
     }
@@ -202,9 +230,7 @@ class PlayerVM: NSObject, ObservableObject {
         removeObservers(from: audioPlayer?.currentItem)
         removeObserversFromPlayer()
         audioPlayer = nil
-        
     }
-    
     
     private func getAudioItems(data: [SongModel]) -> [AVPlayerItem] {
         var items: [AVPlayerItem] = []
@@ -224,15 +250,12 @@ class PlayerVM: NSObject, ObservableObject {
         return items
     }
     
-    
     private func getLocalFilePath(for song: SongModel) -> String? {
         guard let fileName = song.localPath else {
             return nil
         }
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(fileName).path
     }
-    
-    
     
     func removeObservers(from item: AVPlayerItem?) {
         item?.removeObserver(self, forKeyPath: "loadedTimeRanges")
@@ -250,8 +273,6 @@ class PlayerVM: NSObject, ObservableObject {
     func isPlaying() -> Bool {
         return audioPlayer?.rate != 0
     }
-    
-    
     
     func play() {
         audioPlayer?.play()
@@ -274,15 +295,15 @@ class PlayerVM: NSObject, ObservableObject {
     }
     
     func next() {
+        // FIX: Always use immediate playback for navigation
         if playIndex < data.count - 1 {
-            playAtIndex(playIndex + 1, playImmediately: isPlaying())
+            playAtIndex(playIndex + 1, playImmediately: true)
         } else {
-            playAtIndex(0, playImmediately: isPlaying())
+            playAtIndex(0, playImmediately: true)
         }
         self.publisher.send((0, 0))
         self.loaderpublisher.send(0)
     }
-    
     
     func toggleRepeatMode() {
         DispatchQueue.main.async { [weak self] in
@@ -302,6 +323,8 @@ class PlayerVM: NSObject, ObservableObject {
         if !playNextQueue.isEmpty {
             playNextQueue.removeLast()
         }
+        
+        // FIX: Always use immediate playback for auto-advance
         if repeatMode == .noRepeat {
             if playIndex == data.count - 1 {
                 playAtIndex(0, playImmediately: false)
@@ -321,12 +344,10 @@ class PlayerVM: NSObject, ObservableObject {
         if repeatMode == .repeatCurrentTrack {
             self.seekToSecond(0)
         }
-        
     }
     
     func moveSong(from source: IndexSet, to destination: Int) {
         data.move(fromOffsets: source, toOffset: destination)
-        
     }
     
     func prev() {
@@ -338,10 +359,11 @@ class PlayerVM: NSObject, ObservableObject {
             return
         }
         
+        // FIX: Always use immediate playback for navigation
         if self.playIndex > 0 {
-            playAtIndex(playIndex - 1, playImmediately: self.isPlaying())
+            playAtIndex(playIndex - 1, playImmediately: true)
         }else{
-            playAtIndex(data.count - 1, playImmediately: self.isPlaying())
+            playAtIndex(data.count - 1, playImmediately: true)
         }
     }
     
@@ -366,7 +388,7 @@ class PlayerVM: NSObject, ObservableObject {
     
     func getTrack() -> SongModel? {
         guard playIndex >= 0 && playIndex < data.count else { return nil }
-        self.currentTrack = self.data[playIndex]
+        // FIX: Don't update currentTrack here, it should be set in playAtIndex
         return self.data[playIndex]
     }
     
@@ -382,8 +404,6 @@ class PlayerVM: NSObject, ObservableObject {
         })
     }
     
-    
-    
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         if object is AVPlayerItem {
@@ -395,14 +415,12 @@ class PlayerVM: NSObject, ObservableObject {
                 
                 if ( status == .readyToPlay ) {
                     print("item is ready to play")
-                   
                 }
                 if ( status == .failed ) {
                     print("item failed")
                 }
             }
         }
-        
         
         if object is AVPlayer {
             if (keyPath == "rate") {
@@ -457,7 +475,6 @@ class PlayerVM: NSObject, ObservableObject {
         }
     }
     
-    
     func shufflePlaylist() {
         guard let currentTrack = self.getTrack() else { return }
         self.normalPlayList = self.data
@@ -468,7 +485,6 @@ class PlayerVM: NSObject, ObservableObject {
         self.shuffled = true
     }
     
-    
     func shuffle( tracks: [SongModel], tracklist: PlaylistModel?){
         self.data = tracks
         self.playlist = tracklist
@@ -477,7 +493,6 @@ class PlayerVM: NSObject, ObservableObject {
         self.playIndex = randomIndex
         self.playAtIndex(randomIndex)
     }
-    
     
     func unShufflePlaylist() {
         guard let currentTrack = self.getTrack() else { return }
@@ -493,7 +508,6 @@ class PlayerVM: NSObject, ObservableObject {
         self.shuffled = false
     }
     
-    
     func setupRemoteTransportControls() {
         let commandCenter = MPRemoteCommandCenter.shared()
         
@@ -503,7 +517,6 @@ class PlayerVM: NSObject, ObservableObject {
             seekToSecond(Float(event.positionTime))
             return .success
         }
-        
         
         commandCenter.playCommand.addTarget { [unowned self] event in
             if self.audioPlayer?.rate == 0.0 {
@@ -547,11 +560,7 @@ class PlayerVM: NSObject, ObservableObject {
             self.prev()
             return .success
         }
-        
-        
     }
-    
-    
     
     func setupNowPlayingInfo() {
         guard let track = getTrack() else { return }
@@ -583,18 +592,10 @@ class PlayerVM: NSObject, ObservableObject {
             MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
         }
     }
-
 }
-
-
-
 
 enum RepeatModes {
     case noRepeat
     case repeatAll
     case repeatCurrentTrack
 }
-
-
-
-

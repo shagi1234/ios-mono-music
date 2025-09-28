@@ -126,7 +126,7 @@ struct OtpView: View {
                             
                             Spacer()
                                 .frame(maxHeight: .infinity)
-                        }else{
+                        } else {
                             Button{
                                 hideKeyboard()
                                 vm.verify(otp: vm.otpText)
@@ -138,9 +138,7 @@ struct OtpView: View {
                                     .cornerRadius(4)
                                     .font(.bold_16)
                                     .foregroundColor(Color.bgBlack)
-                            }
-                            
-                            
+                            }.pressAnimation()
                             
                             if vm.timeRemaining > 0 {
                                 HStack {
@@ -167,7 +165,7 @@ struct OtpView: View {
                                     }
                                     .frame(maxWidth: .infinity, alignment: .center)
                                     .padding(.top, 12)
-                                }
+                                }.pressAnimation()
                             }
                             Spacer()
                                 .frame(maxHeight: .infinity)

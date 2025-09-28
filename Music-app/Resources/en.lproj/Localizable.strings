@@ -156,6 +156,10 @@
 "similar_artists" = "Similar Artists";
 "similar_playlists" = "Similar Playlists";
 "similar_albums" = "Similar Albums";
+"update_title" = "New version is out!!!";
+"update_description" = "Mono Music has amazing improvements and fixes. Download the new version and get even more awesome!";
+"update_button" = "Download";
+"later_button" = "Later";
 
 
 

@@ -52,7 +52,7 @@ struct ScrollableHStack <Content: View>: View {
             .padding(.horizontal, 20)
             .frame(height: 35)
             .contentShape(Rectangle())
-            .onTapGesture {
+            .pressWithAnimation {
                 onClick()
             }
             ScrollView(.horizontal, showsIndicators: false) {

@@ -19,7 +19,8 @@ struct ContactUsView: View {
                     Image(systemName: "chevron.left")
                         .foregroundColor(.white)
                         .frame(width: 40, height: 40, alignment: .center)
-                })
+                }).pressAnimation()
+                
                 Spacer()
             }
             .padding(.horizontal, 20)
@@ -68,7 +69,8 @@ struct ContactUsView: View {
                                     .font(.bold_16)
                                     .foregroundColor(Color.bgBlack)
                             }
-                        }
+                        }.pressAnimation()
+                        
                         Spacer()
                             .frame(height: 75)
                     }

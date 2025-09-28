@@ -55,6 +55,21 @@ class Coordinator: ObservableObject {
         }
     }
     
+    @ViewBuilder
+    func getBottomSheets() -> some View {
+        VStack {
+            switch Tools.shared.presentedBottomsheet {
+                
+            case .showUpdateSheet(let updateManager) :
+                UpdateSheetView(appUpdateManager: updateManager)
+                
+            case .none:
+                EmptyView()
+            }
+            
+        }
+    }
+    
     func navigateTo(tab: Int, page: Page) {
         paths[tab].append(page)
     }
@@ -68,4 +83,9 @@ class Coordinator: ObservableObject {
     }
     
   
+}
+
+enum BottomSheet: Observable {
+    case showUpdateSheet(_ updateManager: AppUpdateManager)
+    
 }

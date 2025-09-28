@@ -23,7 +23,7 @@ struct SearchHistoryItem: View {
                 .padding(.vertical, 5)
                 .background(Color.bgLightBlack)
                 .cornerRadius(30)
-                .onTapGesture {
+                .pressWithAnimation {
                     onSelect()
                 }
 //            

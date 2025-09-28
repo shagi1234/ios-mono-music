@@ -83,6 +83,7 @@ struct ArtistView: View {
                                             .background(Color.orange)
                                             .clipShape(Circle())
                                     }
+                                    .pressAnimation()
                                     .disabled(data.songs?.isEmpty ?? true)
                                     .padding(.trailing, 20)
                                     .padding(.bottom, 10)
@@ -133,7 +134,7 @@ struct ArtistView: View {
                             .padding(.horizontal, 20)
                             .padding(.bottom, 12)
                             .contentShape(Rectangle())
-                            .onTapGesture {
+                            .pressWithAnimation {
                                 coordinator.navigateTo(tab: mainVm.selectedTab, page: .seeAll(type: .songs, id: data.id, artistName: data.name ))
                             }
                             ForEach(songs.prefix(6).enumeratedArray(), id: \.offset) { ind, i in
@@ -143,7 +144,7 @@ struct ArtistView: View {
                                 }, drag: {
                                     playervm.addUpToNext(track: i, tracklist: nil)
                                 })
-                                .onTapGesture {
+                                .pressWithAnimation {
                                     if networkMonitor.isConnected {
                                         playervm.create(index: ind, tracks: songs, tracklist: nil)
                                     }else if !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath != nil{
@@ -167,7 +168,7 @@ struct ArtistView: View {
                                         AlbumGridItem(data: i)
                                             .padding(.leading, ind != 0 ? 0 : 20)
                                             .padding(.trailing, ind + 1 != albums.count ? 0 : 20)
-                                    }
+                                    }.pressAnimation()
                                 }
                             }
                             .padding(.top, 30)
@@ -189,7 +190,7 @@ struct ArtistView: View {
                             .padding(.top, 30)
                             .padding(.bottom, 12)
                             .contentShape(Rectangle())
-                            .onTapGesture {
+                            .pressWithAnimation {
                                 coordinator.navigateTo(tab: mainVm.selectedTab, page: .seeAll(type: .singles, id: data.id, artistName: data.name ))
                             }
                             ForEach(songs.enumeratedArray(), id:  \.offset) { ind, i in
@@ -199,7 +200,7 @@ struct ArtistView: View {
                                     playervm.addUpToNext(track: i, tracklist: nil)
                                 })
                                 .id(i.id)
-                                .onTapGesture {
+                                .pressWithAnimation {
                                     if networkMonitor.isConnected {
                                         playervm.create(index: ind, tracks: songs, tracklist: nil)
                                     }else if !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath != nil{
@@ -223,7 +224,7 @@ struct ArtistView: View {
                                                     coordinator.navigateTo(tab: mainVm.selectedTab, page: .artist(id: artist.id))
                                                 } label: {
                                                     CircularArtistItem(data: artist)
-                                                }
+                                                }.pressAnimation()
                                             }
                                         }
                                         .padding(.horizontal, 20)
@@ -240,8 +241,7 @@ struct ArtistView: View {
                         vm.getData()
                     }
                 } else if vm.inProgress {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                    AppLoadingView()
                 }
             }.frame(maxWidth: .infinity, maxHeight: .infinity)
                 .overlay(VStack(spacing: 0, content: {
@@ -256,7 +256,7 @@ struct ArtistView: View {
                             Image(systemName: "chevron.left")
                                 .foregroundColor(.white)
                                 .frame(width: 40, height: 40, alignment: .center)
-                        })
+                        }).pressAnimation()
                         
                         Text(vm.data?.name ?? "")
                             .foregroundColor(.white)

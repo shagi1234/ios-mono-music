@@ -34,7 +34,8 @@ struct RegisterView: View {
                         Image(systemName: "chevron.left")
                             .foregroundColor(.white)
                             .frame(width: 40, height: 40, alignment: .center)
-                    })
+                    }).pressAnimation()
+                    
                     Spacer()
                 }
                 GeometryReader{ geo in
@@ -252,10 +253,10 @@ struct RegisterView: View {
                                             .font(.bold_16)
                                             .foregroundColor(Color.bgBlack)
                                     }
-                                }
+                                }.pressAnimation()
                                 .padding(.vertical, 20)
                                 
-                                if Defaults.logged{
+                                if Defaults.logged {
                                     Button{
                                         Defaults.logout()
                                         playervm.clearPlayer()
@@ -270,8 +271,9 @@ struct RegisterView: View {
                                                 .foregroundColor(.white)
                                                 .multilineTextAlignment(.leading)
                                         }
-                                    }
+                                    }.pressAnimation()
                                 }
+                                
                                 Spacer()
                                     .frame( height: 75)
                             }

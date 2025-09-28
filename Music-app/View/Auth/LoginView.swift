@@ -91,7 +91,7 @@ struct LoginView: View {
                     }else{
                         numError = true
                     }
-                }label: {
+                } label: {
                     if  vm.inProgress{
                         ProgressView()
                             .tint(Color.bgBlack)
@@ -109,7 +109,7 @@ struct LoginView: View {
                             .foregroundColor(Color.bgBlack)
                     }
                     
-                }
+                }.pressAnimation()
                 
                 Spacer()
                     .frame(maxHeight: .infinity)

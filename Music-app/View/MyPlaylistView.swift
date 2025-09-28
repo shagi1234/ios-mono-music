@@ -143,7 +143,7 @@ struct MyPlaylistView: View {
                                 .background(Color.bgLightBlack)
                                 .cornerRadius(3)
                                 .padding(.vertical, 10)
-                            }
+                            }.pressAnimation()
                             
                             Button {
                                 if !networkMonitor.isConnected && (songs.first(where: {$0.localPath != nil}) != nil) && playervm.data.isEmpty{
@@ -173,7 +173,7 @@ struct MyPlaylistView: View {
                                 }.frame(maxWidth: 34, maxHeight: 34, alignment: .center)
                                     .background(Color.bgLightBlack)
                                     .cornerRadius(3)
-                            }
+                            }.pressAnimation()
                             
                             Spacer()
                             if let index = mainVm.downloadingPlaylist?.firstIndex(where: { $0.localId == data.localId && $0.isDownloadOn == true }), mainVm.downloadError {
@@ -186,7 +186,7 @@ struct MyPlaylistView: View {
                                             .renderingMode(.template)
                                             .foregroundColor(.white)
                                             .frame(width: 18, height: 18, alignment: .center)
-                                    }
+                                    }.pressAnimation()
                                     .frame(maxWidth: 34, maxHeight: 34, alignment: .center)
                                     .background(Color.bgLightBlack)
                                     .cornerRadius(3)
@@ -206,7 +206,7 @@ struct MyPlaylistView: View {
                                     .foregroundColor(.white)
                                     .frame(width: 18, height: 18, alignment: .center)
                                    
-                            }
+                            }.pressAnimation()
                             .frame(maxWidth: 34, maxHeight: 34, alignment: .center)
                             .background(Color.bgLightBlack)
                             .cornerRadius(3)
@@ -231,7 +231,7 @@ struct MyPlaylistView: View {
                                     playervm.addUpToNext(track: i, tracklist: nil)
                                 })
                                 .padding(.leading, 20)
-                                .onTapGesture {
+                                .pressWithAnimation {
                                     if networkMonitor.isConnected {
                                         playervm.create(index: ind, tracks: songs, tracklist: data)
                                     }else if !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath != nil{
@@ -256,8 +256,7 @@ struct MyPlaylistView: View {
                     vm.getData()
                 }
             } else if vm.inProgress {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                AppLoadingView()
             }
         }
         .onChange(of: vm.alertPresented) { newValue in
@@ -290,7 +289,7 @@ struct MyPlaylistView: View {
                             .foregroundColor(.white)
                             .frame(width: 107, height: 30, alignment: .center)
                             .padding(.trailing, 8)
-                    }
+                    }.pressAnimation()
                     
                     Button{
                         vm.turnDownloadOff()
@@ -300,7 +299,7 @@ struct MyPlaylistView: View {
                             .font(.bold_14)
                             .foregroundColor(.redCustom)
                             .frame(width: 107, height: 30, alignment: .center)
-                    }
+                    }.pressAnimation()
                 }
             }
             .frame( height: 128, alignment: .center)
@@ -332,7 +331,7 @@ struct MyPlaylistView: View {
                     Image(systemName: "chevron.left")
                         .foregroundColor(.white)
                         .frame(width: 40, height: 40, alignment: .center)
-                })
+                }).pressAnimation()
                 
                 Text(LocalizedStringKey(vm.data?.name ?? ""))
                     .foregroundColor(.white)

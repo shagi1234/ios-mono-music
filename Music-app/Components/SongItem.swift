@@ -175,7 +175,7 @@ extension SongItem{
                         .contentShape(Rectangle())
                         .padding(.trailing, 15)
                         .foregroundColor(disabled ? .textGray : .white)
-                        .onTapGesture{
+                        .pressWithAnimation {
                             onMore?()
                             impactMed.impactOccurred()
                         }

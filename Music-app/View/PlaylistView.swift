@@ -110,7 +110,7 @@ struct PlaylistView: View {
                             .background(Color.bgLightBlack)
                             .cornerRadius(3)
                             .padding(.vertical, 10)
-                        }
+                        }.pressAnimation()
                         
                         Button {
                             if playervm.data.isEmpty {
@@ -134,7 +134,8 @@ struct PlaylistView: View {
                             }.frame(maxWidth: 34, maxHeight: 34, alignment: .center)
                                 .background(Color.bgLightBlack)
                                 .cornerRadius(3)
-                        }
+                        }.pressAnimation()
+                        
                         Spacer()
                         Button {
                             if vm.isSaved {
@@ -159,7 +160,7 @@ struct PlaylistView: View {
                                     .renderingMode(.template)
                                     .foregroundColor(.white)
                             }
-                        }
+                        }.pressAnimation()
                         .frame(maxWidth: 34, maxHeight: 34, alignment: .center)
                         .background(Color.bgLightBlack)
                         .cornerRadius(3)
@@ -178,7 +179,7 @@ struct PlaylistView: View {
                                     playervm.addUpToNext(track: i, tracklist: nil)
                                 })
                                 
-                                .onTapGesture {
+                                .pressWithAnimation {
                                     if networkMonitor.isConnected {
                                         playervm.create(index: ind, tracks: songs, tracklist: data)
                                     }else if !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath != nil{
@@ -202,8 +203,7 @@ struct PlaylistView: View {
                     vm.getData()
                 }
             } else if vm.inProgress {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                AppLoadingView()
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -220,7 +220,7 @@ struct PlaylistView: View {
                     Image(systemName: "chevron.left")
                         .foregroundColor(.white)
                         .frame(width: 40, height: 40, alignment: .center)
-                })
+                }).pressAnimation()
                 
                 Text(LocalizedStringKey(vm.data?.name ?? ""))
                     .foregroundColor(.white)
@@ -284,7 +284,7 @@ struct PlaylistView: View {
                             .font(.bold_14)
                             .foregroundColor(.redCustom)
                             .frame(width: 107, height: 30, alignment: .center)
-                    }
+                    }.pressAnimation()
                 }
             }
             .frame( height: 128, alignment: .center)
@@ -315,12 +315,12 @@ struct PlaylistView: View {
                         HStack(spacing: 0) {
                             ForEach(similar.enumeratedArray(), id: \.offset){ ind,playlist in
                                 Button {
-                                    coordinator.navigateTo(tab: mainVm.selectedTab, page: .playlist(type: .simple, id: Int64(playlist.id)))
+                                    coordinator.navigateTo(tab: mainVm.selectedTab, page: .playlist(type: vm.type == .album ? .album: .simple, id: Int64(playlist.id)))
                                 } label: {
                                     PlaylistGridItem(data: playlist)
                                         .padding(.leading, ind != 0 ? 0 : 20)
                                         .padding(.trailing, ind+1 != similar.count ? 0 : 20)
-                                }
+                                }.pressAnimation()
                             }
                         }
                     }

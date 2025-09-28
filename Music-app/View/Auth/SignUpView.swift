@@ -37,7 +37,7 @@ struct SignUpView: View {
                         .cornerRadius(4)
                         .font(.bold_16)
                         .foregroundColor(Color.bgBlack)
-                }
+                }.pressAnimation()
                 
               Spacer()
                     .frame(maxHeight: 57)

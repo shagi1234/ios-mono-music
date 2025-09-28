@@ -3,24 +3,28 @@ PODS:
     - GRDB.swift/standard (= 6.17.0)
   - GRDB.swift/standard (6.17.0)
   - Kingfisher (7.8.1)
+  - lottie-ios (4.5.2)
   - Resolver (1.5.0)
 
 DEPENDENCIES:
   - GRDB.swift (~> 6.17.0)
   - Kingfisher (~> 7.0)
+  - lottie-ios
   - Resolver
 
 SPEC REPOS:
   trunk:
     - GRDB.swift
     - Kingfisher
+    - lottie-ios
     - Resolver
 
 SPEC CHECKSUMS:
   GRDB.swift: ce9da57719de2b5e786455ed99629506fcb19c98
   Kingfisher: 63f677311d36a3473f6b978584f8a3845d023dc5
+  lottie-ios: 96784afc26ea031d3e2b6cae342a4b8915072489
   Resolver: 68984624572763018fd8ec7b8e3e8df0e3b6bba5
 
-PODFILE CHECKSUM: f1654521eedeeac18e83c82d83c1561bc0f4fa13
+PODFILE CHECKSUM: 87dd3dd8d9f6facf2fbea38865a981e18bd07585
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.16.2

@@ -10,4 +10,5 @@ target 'Music-app' do
   #pod 'Alamofire', '~> 5.6.4'
   pod 'Kingfisher', '~> 7.0'
   pod 'GRDB.swift', '~> 6.17.0'
+  pod 'lottie-ios'
 end

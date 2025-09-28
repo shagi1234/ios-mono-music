@@ -113,7 +113,7 @@ struct PlaylistItem: View {
             } label: {
                 Image("v-more-16")
                     .frame( maxHeight: .infinity, alignment: .center)
-            }
+            }.pressAnimation()
         }
         .padding(.vertical, 5)
         .onAppear{

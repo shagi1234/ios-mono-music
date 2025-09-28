@@ -56,7 +56,7 @@ struct SubscriptionCard: View {
                                 .frame(maxWidth: .infinity, alignment: .leading )
                                 .foregroundColor( .accentColor)
                                 .padding(.top, 20)
-                                .onTapGesture {
+                                .pressWithAnimation {
                                     print(subs.id)
                                 }
                         }
@@ -104,7 +104,7 @@ struct SubscriptionCard: View {
                 .stroke( selectedId == subs.id || subs.price == 0 || isInSettings ? Color.accentColor : .clear, lineWidth: 1)
             
         )
-        .onTapGesture {
+        .pressWithAnimation {
             onClick()
         }
         .background{

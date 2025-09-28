@@ -23,7 +23,7 @@ struct HomeHeader: View {
                     .renderingMode(.template)
                     .foregroundColor(.white)
                     .frame(width: 40, height: 40, alignment: .center)
-            }
+            }.pressAnimation()
             
             Button {
                 coordinator.navigateTo(tab: 0, page: .settings)
@@ -32,7 +32,8 @@ struct HomeHeader: View {
                     .renderingMode(.template)
                     .foregroundColor(.white)
                     .frame(width: 40, height: 40, alignment: .center)
-            }
+            }.pressAnimation()
+            
         }.padding(.horizontal, 20)
             .padding(.vertical, 10)
             .frame(maxWidth: .infinity)

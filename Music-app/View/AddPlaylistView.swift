@@ -28,7 +28,7 @@ struct AddPlaylistView: View {
                     Image(systemName: "xmark")
                         .foregroundColor(.white)
                 
-                }
+                }.pressAnimation()
                 
                 Spacer()
             }.frame(height: 50)
@@ -89,7 +89,7 @@ struct AddPlaylistView: View {
                     .frame(height: 50)
                     .background(Color.accentColor)
                     .cornerRadius(5)
-            }
+            }.pressAnimation()
             .padding(.bottom, 20)
             .onChange(of: libraryVm.customPLaylistAdded) { newValue in
                 var p = PlaylistModel(type: PlaylistType.local.rawValue, isDownloadOn: false, id: libraryVm.playlistId ?? 0, name: name, count: 0)

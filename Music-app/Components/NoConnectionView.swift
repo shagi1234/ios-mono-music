@@ -27,7 +27,7 @@ struct NoConnectionView: View {
                     .frame(height: 50)
                     .background(Color.accentColor)
                     .cornerRadius(10)
-            }
+            }.pressAnimation()
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

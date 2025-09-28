@@ -53,7 +53,7 @@ struct SearchBar: View {
                     Image(systemName: "xmark")
                         .foregroundColor(.textGray)
                         .frame(width: 40, height: 40)
-                }
+                }.pressAnimation()
             }
         }
         .padding(.horizontal, 16)

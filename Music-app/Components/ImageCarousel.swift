@@ -9,7 +9,6 @@ import SwiftUI
 import Resolver
 
 struct AdaptivePagingScrollView: View {
-    
     private let items: [AnyView]
     private let itemPadding: CGFloat
     private let itemSpacing: CGFloat
@@ -18,13 +17,12 @@ struct AdaptivePagingScrollView: View {
     private let visibleContentLength: CGFloat
     private let initialOffset: CGFloat
     private let scrollDampingFactor: CGFloat = 0.66
+
     @Binding var currentPageIndex: Int
     @State private var currentScrollOffset: CGFloat = 0
     @State private var gestureDragOffset: CGFloat = 0
     @Binding var expand: Bool
     @StateObject var playerVm = Resolver.resolve(PlayerVM.self)
-    
-   
     
     private func countOffset(for pageIndex: Int) -> CGFloat {
         let activePageOffset = CGFloat(pageIndex) * (itemScrollableSide + itemPadding)
@@ -45,7 +43,6 @@ struct AdaptivePagingScrollView: View {
         } else {
             return currentPageIndex
         }
-   
     }
     
     private func countCurrentScrollOffset() -> CGFloat {
@@ -57,12 +54,12 @@ struct AdaptivePagingScrollView: View {
     }
     
     private func changeFocus() {
-        if expand{
+        if expand {
             withAnimation {
                 currentScrollOffset = countOffset(for: currentPageIndex)
                 playerVm.playAtIndex(currentPageIndex)
             }
-        }else{
+        } else {
             currentScrollOffset = countOffset(for: currentPageIndex)
         }
     }
@@ -73,8 +70,8 @@ struct AdaptivePagingScrollView: View {
                   itemPadding: CGFloat,
                   visibleContentLength: CGFloat,
                   expand: Binding<Bool>,
-                  @ViewBuilder content: () -> A) {
-        
+                  @ViewBuilder content: () -> A)
+    {
         let views = content()
         self.items = [AnyView(views)]
         
@@ -148,9 +145,11 @@ struct FrameModifier: ViewModifier {
     let contentLength: CGFloat
     let currentScrollOffset: CGFloat
     let expand: Bool
+    
     init (contentLength: CGFloat,
           visibleContentLength: CGFloat,
-          currentScrollOffset: CGFloat, expand: Bool) {
+          currentScrollOffset: CGFloat,
+          expand: Bool) {
         self.contentLength = contentLength
         self.currentScrollOffset = currentScrollOffset
         self.expand = expand
@@ -160,7 +159,6 @@ struct FrameModifier: ViewModifier {
         return content
             .frame(width: expand ? UIScreen.main.bounds.width : 47)
             .offset(x: self.currentScrollOffset, y: 0)
-        
     }
 }
 

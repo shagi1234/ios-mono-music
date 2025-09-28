@@ -28,7 +28,7 @@ struct MyPlaylistsHeader: View {
                     .renderingMode(.template)
                     .foregroundColor(.white)
                     .frame(width: 44, height: 44, alignment: .center)
-            }
+            }.pressAnimation()
             
         }
         .frame(maxWidth: .infinity)

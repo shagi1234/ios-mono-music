@@ -37,7 +37,7 @@ struct BottomSheetBtnView: View {
         }.frame(height: 37)
             .listRowBackground(bgColor)
             .contentShape(Rectangle())
-            .onTapGesture {
+            .pressWithAnimation {
                 onClick()
             }
     }

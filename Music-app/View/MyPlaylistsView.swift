@@ -46,7 +46,7 @@ struct MyPlaylistsView: View {
                                     .frame(height: 34, alignment: .center)
                                     .background(item == activeTabType ? Color.accentColor : Color.bgLightBlack)
                                     .cornerRadius(3)
-                            }
+                            }.pressAnimation()
                             .padding(.trailing, 1)
                         }
                         Spacer()
@@ -84,7 +84,7 @@ struct MyPlaylistsView: View {
                                                     }
                                                     impactMed.impactOccurred()
                                                 }
-                                            }
+                                            }.pressAnimation()
                                         }
                                     case .playlists:
                                         if playlist.type == "top" || playlist.type == "playlist" || playlist.type == "local" {
@@ -102,7 +102,7 @@ struct MyPlaylistsView: View {
                                                     }
                                                     impactMed.impactOccurred()
                                                 }
-                                            }
+                                            }.pressAnimation()
                                         }
                                         
                                     case .all:
@@ -120,7 +120,7 @@ struct MyPlaylistsView: View {
                                                 }
                                                 impactMed.impactOccurred()
                                             }
-                                        }
+                                        }.pressAnimation()
                                         .onAppear{
                                             if vm.playlists.last?.id == playlist.id && vm.canLoadMore {
                                                 vm.getMyPlaylists(page: vm.page + 1)
@@ -142,7 +142,7 @@ struct MyPlaylistsView: View {
                                                     }
                                                     impactMed.impactOccurred()
                                                 }
-                                            }
+                                            }.pressAnimation()
                                         }
                                     }
                                 }
@@ -163,7 +163,8 @@ struct MyPlaylistsView: View {
                                     .foregroundColor(Color.bgBlack)
                                     .font(.med_15)
                                     .padding(.horizontal, 20)
-                            }.frame(height: 50)
+                            }.pressAnimation()
+                                .frame(height: 50)
                                 .background(Color.accentColor)
                                 .cornerRadius(10)
                         }.frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -213,7 +214,7 @@ struct MyPlaylistsView: View {
                             .font(.bold_14)
                             .foregroundColor(.redCustom)
                             .frame(width: 107, height: 30, alignment: .center)
-                    }
+                    }.pressAnimation()
                 }
             }
             .frame( height: 128, alignment: .center)
