@@ -1,16 +1,13 @@
-//
-//  SubsEndView.swift
-//  Music-app
-//
-//  Created by SURAY on 31.10.2024.
-//
-
 import SwiftUI
 import Resolver
 
 struct SubsEndView: View {
     @EnvironmentObject var coordinator: Coordinator
     @StateObject var playervm  = Resolver.resolve(PlayerVM.self)
+    
+    @AppStorage(DefaultsKeys.subsHasEnded.rawValue) var subsHasEnded: Bool = false
+    @AppStorage(DefaultsKeys.subsEndDate.rawValue) var subsEndDate: String = ""
+    @AppStorage(DefaultsKeys.logged.rawValue) var logged: Bool = false
     
     var body: some View {
         ZStack{
@@ -75,6 +72,16 @@ struct SubsEndView: View {
                 Spacer()
                     .frame(maxHeight: .infinity)
             }
+        }
+        .onAppear {
+            print("👁️ SubsEndView DID APPEAR on screen!")
+            print("   - View is now VISIBLE to user")
+            print("   - logged: \(logged)")
+            print("   - subsHasEnded: \(subsHasEnded)")
+            print("   - subsEndDate: \(subsEndDate)")
+        }
+        .onDisappear {
+            print("👋 SubsEndView disappeared from screen")
         }
     }
 }

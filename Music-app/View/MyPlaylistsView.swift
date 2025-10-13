@@ -19,21 +19,25 @@ struct MyPlaylistsView: View {
     @State var addPlaylistPresented = false
     @State var playlistBSPresented = false
     @State var deleteAlertPresented = false
+    @State var likedSongsCount = 0
     @State var localPlaylist : PlaylistModel?
     @State var addPlaylistViewId = UUID().uuidString
     @State var activeTabType: MediaType = .all
     let impactMed = UIImpactFeedbackGenerator(style: .medium)
+    @State var exampleSong: SongModel? = SongModel.example
     
     var body: some View {
         VStack(spacing: 0) {
             MyPlaylistsHeader {
                 addPlaylistPresented = true
             }
+            
             ScrollViewReader{ reader in
                 ScrollView(.horizontal, showsIndicators: false){
                     HStack{
                         Spacer()
                             .frame(width: 20)
+                        
                         ForEach(MediaType.allCases, id: \.self){  item in
                             Button {
                                 activeTabType = item
@@ -47,7 +51,7 @@ struct MyPlaylistsView: View {
                                     .background(item == activeTabType ? Color.accentColor : Color.bgLightBlack)
                                     .cornerRadius(3)
                             }.pressAnimation()
-                            .padding(.trailing, 1)
+                                .padding(.trailing, 1)
                         }
                         Spacer()
                             .frame(width: 20)
@@ -66,6 +70,15 @@ struct MyPlaylistsView: View {
                     if !vm.playlists.isEmpty {
                         ScrollView {
                             LazyVStack(spacing: 0) {
+                                
+                                if item == .all {
+                                    Button {
+                                        coordinator.navigateTo(tab: 2, page: .likedSongs)
+                                    } label: {
+                                        FavoritesItem(songCount: likedSongsCount)
+                                    }.pressAnimation()
+                                }
+                                
                                 ForEach(vm.playlists, id: \.localId) { playlist in
                                     switch item {
                                     case .albums:
@@ -76,12 +89,14 @@ struct MyPlaylistsView: View {
                                                 PlaylistItem(data: playlist) {
                                                     if playlist.type == "local" {
                                                         mainVm.playlist   =  vm.getLocalData(id: playlist.localId ?? 1)
-                                                    }else{
+                                                    } else {
                                                         mainVm.playlist = playlist
                                                     }
+                                                    
                                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                                         playlistBSPresented.toggle()
                                                     }
+                                                    
                                                     impactMed.impactOccurred()
                                                 }
                                             }.pressAnimation()
@@ -110,22 +125,25 @@ struct MyPlaylistsView: View {
                                             coordinator.navigateTo(tab: 2, page: .myPlaylist(id: playlist.localId!))
                                         } label: {
                                             PlaylistItem(data: playlist) {
+                                                
                                                 if playlist.type == "local" {
                                                     mainVm.playlist   =  vm.getLocalData(id: playlist.localId ?? 1)
-                                                }else{
+                                                } else {
                                                     mainVm.playlist = playlist
                                                 }
+                                                
                                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                                     playlistBSPresented.toggle()
                                                 }
+                                                
                                                 impactMed.impactOccurred()
                                             }
                                         }.pressAnimation()
-                                        .onAppear{
-                                            if vm.playlists.last?.id == playlist.id && vm.canLoadMore {
-                                                vm.getMyPlaylists(page: vm.page + 1)
+                                            .onAppear{
+                                                if vm.playlists.last?.id == playlist.id && vm.canLoadMore {
+                                                    vm.getMyPlaylists(page: vm.page + 1)
+                                                }
                                             }
-                                        }
                                     case .downloaded:
                                         if playlist.isDownloadOn ?? false{
                                             Button {
@@ -147,6 +165,7 @@ struct MyPlaylistsView: View {
                                     }
                                 }
                             }.padding(.horizontal, 20)
+                            
                             Spacer().frame(height: 100)
                         }
                     } else {
@@ -185,7 +204,7 @@ struct MyPlaylistsView: View {
                     .lineLimit(2)
                     .padding(.top, 20)
                     .padding(.bottom, 20)
-                   
+                
                 
                 HStack{
                     Button{
@@ -231,7 +250,7 @@ struct MyPlaylistsView: View {
                 .backgroundColor(.black.opacity(0.5))
         }
         .fullScreenCover(isPresented: $playlistBSPresented) {
-            MoreView(song: SongModel.example, playlist: mainVm.playlist, isPLaylist: true) {
+            MoreView(song: $exampleSong, playlist: mainVm.playlist, isPLaylist: true) {
                 playlistBSPresented.toggle()
             } playNext: {
                 
@@ -252,21 +271,21 @@ struct MyPlaylistsView: View {
                     }
                 }
             }
-        editPLaylist: {
-            addPlaylistViewId = UUID().uuidString
-            playlistBSPresented = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
-                self.addPlaylistPresented = true
+            editPLaylist: {
+                addPlaylistViewId = UUID().uuidString
+                playlistBSPresented = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
+                    self.addPlaylistPresented = true
+                }
+            }downloadOrDeleteSongs: {
+                if  mainVm.playlist?.isDownloadOn == true {
+                    vm.turnDownloadOff(localId:  mainVm.playlist?.localId ?? 0)
+                } else {
+                    vm.turnDownloadOn(localId:  mainVm.playlist?.localId ?? 0)
+                }
+                playlistBSPresented = false
+                mainVm.playlist = nil
             }
-        }downloadOrDeleteSongs: {
-            if  mainVm.playlist?.isDownloadOn == true {
-                vm.turnDownloadOff(localId:  mainVm.playlist?.localId ?? 0)
-            } else {
-                vm.turnDownloadOn(localId:  mainVm.playlist?.localId ?? 0)
-            }
-            playlistBSPresented = false
-            mainVm.playlist = nil
-        }
         }
         .fullScreenCover(isPresented: $addPlaylistPresented, onDismiss: {
             mainVm.playlist = nil
@@ -275,8 +294,12 @@ struct MyPlaylistsView: View {
             AddPlaylistView(isPresented: $addPlaylistPresented, playlist: mainVm.playlist, name: mainVm.playlist?.name ?? "")
         }).id(addPlaylistViewId)
             .onAppear{
+                libraryVm.getFavSongsCount()
                 vm.getData()
                 vm.getMyPlaylists(page:  vm.page)
+            }
+            .onReceive(libraryVm.$likedSongsCount) {
+                likedSongsCount = $0
             }
     }
 }

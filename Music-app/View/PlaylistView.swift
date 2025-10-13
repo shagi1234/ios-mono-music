@@ -175,18 +175,16 @@ struct PlaylistView: View {
                             ForEach(songs.enumeratedArray(), id:  \.offset) { ind, i in
                                 SongItem(data: i, current: playervm.currentTrack?.id == i.id, isPlaying: playervm.isPlaying(), isAlbum: vm.type == .album ? true : false, index: ind + 1, disabled : !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath == nil, onMore: {
                                     playervm.bottomSheetSong = i
-                                }, drag: {
-                                    playervm.addUpToNext(track: i, tracklist: nil)
-                                })
-                                
-                                .pressWithAnimation {
+                                },onTap: {
                                     if networkMonitor.isConnected {
                                         playervm.create(index: ind, tracks: songs, tracklist: data)
                                     }else if !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath != nil{
                                         playervm.create(index: ind, tracks: songs, tracklist: data)
                                     }
-                                    
-                                }
+                                },
+                                         drag: {
+                                    playervm.addUpToNext(track: i, tracklist: nil)
+                                })
                             }
                             .padding(.leading, 20)
                         }

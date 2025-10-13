@@ -11,11 +11,11 @@ import Resolver
 
 
 struct MoreView: View {
-    var song : SongModel
+    @Binding var song : SongModel?
     var playlist: PlaylistModel? = PlaylistModel.example
     var isArtists : Bool = false
     var isPLaylist: Bool = false
-    var close: ()->()
+    var close: () -> ()
     var showArtistsInside: (() -> ())? = nil
     var playNext : (() -> ())?
     var closeButtonCallBack : ()->()
@@ -28,11 +28,14 @@ struct MoreView: View {
     @State var isDrag : Bool = false
     
     @StateObject var playervm  = Resolver.resolve(PlayerVM.self)
+    @StateObject var mainVM  = Resolver.resolve(MainVM.self)
+    @StateObject var favVM  = FavVM()
     @StateObject var vm = Resolver.resolve(MainVM.self)
     @State var addToPlaylistPresented = false
     @StateObject var coordinator = Coordinator()
     @State private var sharingText = ""
     @State private var showShareSheet = false
+    @State private var isLiked = false
     @EnvironmentObject var networkMonitor: NetworkMonitor
     
     var body: some View {
@@ -53,6 +56,7 @@ struct MoreView: View {
                                                 .resizable()
                                                 .scaledToFill()
                                                 .clipped()
+                                            
                                             KFImage(data.songs?[1].image.url)
                                                 .placeholder{ Image("cover-img").resizable().scaledToFill().cornerRadius(5)}
                                                 .fade(duration: 0.25)
@@ -103,7 +107,7 @@ struct MoreView: View {
                             }
                             
                         }else{
-                            KFImage(song.image.url)
+                            KFImage(song?.image.url)
                                 .placeholder{ Image("cover-img").resizable().scaledToFill().cornerRadius(5)}
                                 .fade(duration: 0.25)
                                 .resizable()
@@ -113,7 +117,7 @@ struct MoreView: View {
                                 .clipped()
                         }
                         
-                        Text(isPLaylist ? playlist?.name ?? "" : song.name)
+                        Text(isPLaylist ? playlist?.name ?? "" : song?.name ?? "")
                             .font(.bold_16)
                             .lineLimit(0)
                             .foregroundColor(.white)
@@ -126,7 +130,7 @@ struct MoreView: View {
                                 .foregroundColor(.white)
                                 .multilineTextAlignment(.center)
                         }else{
-                            Text(song.artistName)
+                            Text(song?.artistName ?? "")
                                 .font(.med_15)
                                 .lineLimit(1)
                                 .foregroundColor(.white)
@@ -140,7 +144,7 @@ struct MoreView: View {
                                         editPLaylist?()
                                     }
                                 }
-                               
+                                
                                 BottomSheetBtnView(bgColor: Color.moreBg, type: .deletePlaylist) {
                                     deletePlaylist?()
                                 }
@@ -149,7 +153,7 @@ struct MoreView: View {
                                 }
                             }
                             .padding(.bottom, 20)
-                        } else if isArtists{
+                        } else if isArtists {
                             VStack( spacing : 20){
                                 Text(LocalizedStringKey("artists"))
                                     .font(.bold_16)
@@ -157,7 +161,7 @@ struct MoreView: View {
                                     .foregroundColor(.white)
                                     .multilineTextAlignment(.center)
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                ForEach(song.artists.enumeratedArray() , id: \.offset){ index, artist in
+                                ForEach((song?.artists ?? []).enumeratedArray() , id: \.offset){ index, artist in
                                     BottomSheetBtnView(bgColor: Color.moreBg, type: .artists(artists: artist)) {
                                         vm.artistId = artist.id
                                         vm.artistsCount = 1
@@ -173,6 +177,24 @@ struct MoreView: View {
                             
                         }else{
                             VStack(spacing: 20){
+                                if song?.isLiked == true {
+                                    BottomSheetBtnView(bgColor: Color.moreBg, type: .removeFromFav ) {
+                                        if let id = song?.id {
+                                            favVM.addToFav(id,action: .unlike)
+                                            song?.isLiked = false
+                                            isLiked = false
+                                        }
+                                    }
+                                } else {
+                                    BottomSheetBtnView(bgColor: Color.moreBg, type: .addToFav ) {
+                                        if let id = song?.id {
+                                            favVM.addToFav(id,action: .like)
+                                            song?.isLiked = true
+                                            isLiked = true
+                                        }
+                                    }
+                                }
+                                
                                 BottomSheetBtnView(bgColor: Color.moreBg, type: .addToPlaylist) {
                                     addToPlaylist?()
                                 }
@@ -185,34 +207,37 @@ struct MoreView: View {
                                 }
                                 
                                 BottomSheetBtnView(bgColor: Color.moreBg, type: .goToArtist) {
-                                    if song.artists.count > 1{
-                                        vm.artistsCount = song.artists.count
-                                        vm.artists = song.artists
+                                    if song?.artists.count ?? 0 > 1{
+                                        vm.artistsCount = song?.artists.count
+                                        vm.artists = song?.artists
                                     }else{
-                                        vm.artistId = song.artists.first?.id
-                                        vm.artistsCount = song.artists.count
+                                        vm.artistId = song?.artists.first?.id
+                                        vm.artistsCount = song?.artists.count
+                                        
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                             playervm.bottomSheetSong = nil
                                         }
+                                        
                                         close()
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                                             withAnimation(Animation.spring(response: 0.45, dampingFraction: 0.85)){
                                                 vm.changeOpacity = true
-                                              
+                                                
                                             }
                                         }
                                     }
                                 }
                                 
-                                if song.albumId != nil {
+                                if song?.albumId != nil {
                                     BottomSheetBtnView(bgColor: Color.moreBg, type: .goToAlbom) {
                                         playervm.bottomSheetSong = nil
-                                        vm.albumId = song.albumId
+                                        vm.albumId = song?.albumId
+                                        
                                         close()
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                                             withAnimation(Animation.spring(response: 0.45, dampingFraction: 0.85)){
                                                 vm.changeOpacity = true
-                                              
+                                                
                                             }
                                         }
                                     }
@@ -236,7 +261,7 @@ struct MoreView: View {
                 }
                 .disabled(isDrag)
                 .frame(width: geo.size.width, height: geo.size.height)
-            
+                
             }
             .gesture(
                 DragGesture(minimumDistance: 10)
@@ -273,13 +298,16 @@ struct MoreView: View {
                     .background(Color("DarkBlue"))
                     .cornerRadius(4)
             }.pressAnimation()
-           
+            
         }
         .offset(x: 0, y: offset)
         .padding(.horizontal, 20)
         .background(
             Color.bgBlack
         )
+        .onAppear{
+            isLiked = song?.isLiked ?? false
+        }
         .sheet(isPresented: $showShareSheet) {
             ShareSheet(activityItems: [sharingText])
         }
@@ -296,9 +324,4 @@ struct ShareSheet: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {
     }
-}
-
-
-#Preview {
-    MoreView(song: SongModel.example, close: {}, playNext: {}, closeButtonCallBack: {}, addToPlaylist: {})
 }

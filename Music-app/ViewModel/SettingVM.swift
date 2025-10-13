@@ -81,8 +81,11 @@ class SettingVM: ObservableObject{
             case .success(_):
                 self?.promoProgress = false
                 self?.promoMessage = "earned"
-//                Defaults.subsHasEnded = true
-                Defaults.logged = true
+                
+                DispatchQueue.main.async {
+                    Defaults.logged = true
+                }
+                
             case .failure(_):
                 self?.promoMessage = "failMessage"
                 self?.promoProgress = false

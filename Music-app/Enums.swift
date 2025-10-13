@@ -15,6 +15,7 @@ struct BottomSheetBtnData {
 
 enum BottomSheetBtn {
     case addToFav
+    case removeFromFav
     case addToPlaylist
     case removeFromPlaylist
     case playNext
@@ -40,6 +41,8 @@ enum BottomSheetBtn {
             return BottomSheetBtnData(leadingIcon: "artist-profile", title: artist.name, trailingIcon: "chevron.right")
         case .addToFav:
             return BottomSheetBtnData(leadingIcon: "heart", title: "add_to_fav")
+        case .removeFromFav:
+            return BottomSheetBtnData(leadingIcon: "heartActive", title: "remove_from_fav")
         case .addToPlaylist:
             return BottomSheetBtnData(leadingIcon: "save-playlist", title: "add_to_playlist", trailingIcon: "chevron.right")
         case .removeFromPlaylist:

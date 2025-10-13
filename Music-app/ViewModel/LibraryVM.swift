@@ -11,6 +11,7 @@ import Resolver
 class LibraryVM: ObservableObject{
     @Injected var repo: HomeRepo
     @Published var playlistId: Int64?
+    @Published var likedSongsCount: Int = 0
     @Published var customPLaylistAdded : Bool = false
     
     func postPlaylistToLibrary(playlistId: Int64, action: Actions){
@@ -54,6 +55,19 @@ class LibraryVM: ObservableObject{
             switch resp {
             case .success(let success):
                 print(success)
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
+    
+    func getFavSongsCount(){
+        repo.getLikedSongsCount { resp in
+            switch resp {
+            case .success(let response):
+                DispatchQueue.main.async {
+                    self.likedSongsCount = response.favorites_count
+                }
             case .failure(let failure):
                 print(failure)
             }

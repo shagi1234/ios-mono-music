@@ -68,6 +68,7 @@
 
 "close" = "Закрыть";
 "add_to_fav" = "Add to Favourites";
+"remove_from_fav" = "Remove from Favourites";
 "main_settings" = "Основные настройки";
 "add_balance" = "Управляйте своим аккаунтом";
 "my_balance" = "Мой профиль";
@@ -152,4 +153,5 @@
 "update_description" = "В Mono Music появились потрясающие улучшения и исправления. Скачайте новую версию и получите еще больше возможностей!";
 "update_button" = "Скачать";
 "later_button" = "Позже";
+"Favorites" = "Избранное";
 

@@ -227,17 +227,16 @@ struct MyPlaylistView: View {
                                     }else{
                                         mainVm.canShowDelete = false
                                     }
-                                },drag:{
-                                    playervm.addUpToNext(track: i, tracklist: nil)
-                                })
-                                .padding(.leading, 20)
-                                .pressWithAnimation {
+                                },onTap: {
                                     if networkMonitor.isConnected {
                                         playervm.create(index: ind, tracks: songs, tracklist: data)
                                     }else if !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath != nil{
                                         playervm.create(index: ind, tracks: songs, tracklist: data)
                                     }
-                                }
+                                },drag:{
+                                    playervm.addUpToNext(track: i, tracklist: nil)
+                                })
+                                .padding(.leading, 20)
                             }
                         }
                         Spacer().frame(height: 70)

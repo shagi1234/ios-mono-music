@@ -57,7 +57,7 @@ struct PlaylistItem: View {
                     .cornerRadius(3)
                     .clipped()
                   
-                }else{
+                } else {
                     KFImage(playlist?.songs?.last?.image.url)
                         .placeholder{ Image("cover-img").resizable().scaledToFill().cornerRadius(5)}
                         .fade(duration: 0.25)

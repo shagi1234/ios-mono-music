@@ -12,11 +12,11 @@ class HomeRepo {
     func getHome(completion: @escaping (Result<HomeModel, AFError>) -> () ){
         Network.perform(endpoint: Endpoints.main, completionHandler: completion)
     }
-
+    
     func getSearchResult(key: String, completion: @escaping (Result<SearchModel, AFError>) -> () ){
         Network.perform(endpoint: Endpoints.search(key: key), completionHandler: completion)
     }
-
+    
     func getGenres( completion: @escaping (Result<Genres, AFError>) -> () ){
         Network.perform(endpoint: Endpoints.genres, completionHandler: completion)
     }
@@ -76,7 +76,7 @@ class HomeRepo {
     func postPlaylistToLibrary(playlistId: Int64, action: Actions, completion: @escaping (Result<String, AFError>) -> () ){
         Network.perform(endpoint: Endpoints.playlisttoLibrary(playlistId: playlistId, action: action), completionHandler: completion)
     }
-
+    
     func postCustomPlaylistToLibrary(id: Int64, name: String, action: Actions, completion: @escaping (Result<CustomPlaylistModel, AFError>) -> () ){
         Network.perform(endpoint: Endpoints.customPlaylisttoLibrary(id: id, name: name, action: action), completionHandler: completion)
     }
@@ -113,6 +113,18 @@ class HomeRepo {
     }
     func getSimilarAlbums(id: Int64, completion: @escaping (Result<[PlaylistModel], AFError>) -> () ){
         Network.perform(endpoint: Endpoints.similarAlbums(id: id), completionHandler: completion)
+    }
+    
+    func addToFav(id: Int64,action: String, completion: @escaping (Result<AddToFavResponse, AFError>) -> () ){
+        Network.perform(endpoint: Endpoints.addToFav(id: id,action: action), completionHandler: completion)
+    }
+    
+    func getLikedSongs(page: Int,completion: @escaping (Result<Pagination<LikedSongModel>, AFError>) -> () ){
+        Network.perform(endpoint: Endpoints.getLikedSongs(page), completionHandler: completion)
+    }
+    
+    func getLikedSongsCount(completion: @escaping (Result<LikedSongCountResponse, AFError>) -> () ){
+        Network.perform(endpoint: Endpoints.getLikedSongsCount, completionHandler: completion)
     }
     
 }

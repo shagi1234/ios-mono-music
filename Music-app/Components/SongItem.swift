@@ -20,9 +20,11 @@ struct SongItem: View {
     var index: Int = 0
     @State var disabled : Bool = false
     var onMore: (()->())? = nil
+    var onTap: (()->())? = nil
     var drag: (()->())? = nil
     @State  var offset : CGFloat = 0
     @State var isDragging : Bool = false
+    @State private var isMoreButtonArea = false
     let minDragThreshold: CGFloat = 20
     let impactMed = UIImpactFeedbackGenerator(style: .medium)
     private var scale: CGFloat {
@@ -62,6 +64,12 @@ struct SongItem: View {
             }
         }
         .frame(maxWidth: UIScreen.main.bounds.width )
+        .contentShape(Rectangle())
+        .pressWithAnimation {
+            if !isMoreButtonArea {
+                onTap?()
+            }
+        }
     }
 }
 
@@ -106,7 +114,7 @@ extension SongItem{
                     .foregroundColor(disabled ? .textGray : .white)
             }
             
-            HStack {
+            HStack(spacing: 0) {
                 VStack {
                     if  current {
                         HStack{
@@ -169,51 +177,58 @@ extension SongItem{
                             .foregroundColor(.textGray)
                     }
                 }
+                .gesture(
+                    DragGesture(minimumDistance: 25, coordinateSpace: .local)
+                        .onChanged { value in
+                            if abs(value.translation.width) > abs(value.translation.height) {
+                                if value.translation.width < 0 && abs(value.translation.width) > minDragThreshold {
+                                    withAnimation(.spring) {
+                                        self.isDragging = true
+                                        offset = value.translation.width
+                                    }
+                                }
+                            }
+                        }
+                        .onEnded { value in
+                            withAnimation(.bouncy) {
+                                isDragging = false
+                                if abs(offset) >= UIScreen.main.bounds.width / 7 {
+                                    offset = .zero
+                                    drag?()
+                                   
+                                    impactMed.impactOccurred()
+                                } else {
+                                    offset = .zero
+                                }
+                            }
+                        }
+                )
+                
                 if onMore != nil {
-                    Image("v-more-16")
+                    Color.clear
                         .frame(width: 44, height: 44, alignment: .center)
                         .contentShape(Rectangle())
-                        .padding(.trailing, 15)
-                        .foregroundColor(disabled ? .textGray : .white)
-                        .pressWithAnimation {
+                        .overlay(
+                            Image("v-more-16")
+                                .foregroundColor(disabled ? .textGray : .white)
+                        )
+                        .onTapGesture {
+                            isMoreButtonArea = true
                             onMore?()
                             impactMed.impactOccurred()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                isMoreButtonArea = false
+                            }
                         }
+                        .padding(.trailing, 15)
                 } else if moveOn {
                     Image("h-lines-20")
                         .foregroundColor(.white)
                         .frame(width: 44, height: 44, alignment: .center)
                 }
             }
-            .contentShape(Rectangle())
-            .gesture(
-                DragGesture(minimumDistance: 25, coordinateSpace: .local)
-                    .onChanged { value in
-                        if abs(value.translation.width) > abs(value.translation.height) {
-                            if value.translation.width < 0 && abs(value.translation.width) > minDragThreshold {
-                                withAnimation(.spring) {
-                                    self.isDragging = true
-                                    offset = value.translation.width
-                                }
-                            }
-                        }
-                    }
-                    .onEnded { value in
-                        withAnimation(.bouncy) {
-                            isDragging = false
-                            if abs(offset) >= UIScreen.main.bounds.width / 7 {
-                                offset = .zero
-                                drag?()
-                               
-                                impactMed.impactOccurred()
-                            } else {
-                                offset = .zero
-                            }
-                        }
-                    }
-            )
         }
-        .contentShape(Rectangle())
+        .allowsHitTesting(!isMoreButtonArea)
     }
 }
 
@@ -239,4 +254,3 @@ struct CircularProgressView: View {
         }
     }
 }
-

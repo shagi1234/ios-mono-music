@@ -23,6 +23,7 @@ class PlayerVM: NSObject, ObservableObject {
     var normalPlayList = [SongModel]()
     var playlist: PlaylistModel?
     var currentTrack : SongModel?
+    @Published var isLiked: Bool = false
     @Published var bottomSheetSong : SongModel?
     @Published var playIndex : Int = -1
     var currentTrackId: Int64?
@@ -44,7 +45,6 @@ class PlayerVM: NSObject, ObservableObject {
     private var cancellable: AnyCancellable?
     var c = true;
     
-    // FIX: Add delayed task management
     private var delayedPlayTask: DispatchWorkItem?
     private var isPlayingTransition = false
     
@@ -56,7 +56,6 @@ class PlayerVM: NSObject, ObservableObject {
     }
     
     func create(index: Int, tracks: [SongModel], tracklist: PlaylistModel?) {
-        // FIX: Cancel any pending delayed tasks
         delayedPlayTask?.cancel()
         isPlayingTransition = false
         
@@ -68,7 +67,6 @@ class PlayerVM: NSObject, ObservableObject {
     }
     
     func playAtIndex(_ index: Int, playImmediately: Bool = true) {
-        // FIX: Prevent multiple rapid calls
         guard !isPlayingTransition else {
             print("Blocking rapid playAtIndex call - transition in progress")
             return
@@ -85,7 +83,6 @@ class PlayerVM: NSObject, ObservableObject {
             return
         }
         
-        // FIX: Cancel any existing delayed task
         delayedPlayTask?.cancel()
         delayedPlayTask = nil
         
@@ -104,9 +101,9 @@ class PlayerVM: NSObject, ObservableObject {
         
         self.currentTrackId = self.data[index].id
         
-        // FIX: Update state immediately for all UI components
         self.playIndex = index
         self.currentTrack = self.data[index]
+        self.isLiked = currentTrack?.isLiked ?? false
         
         self.clearPlayer()
         self.publisher.send((0, 0))
@@ -115,13 +112,11 @@ class PlayerVM: NSObject, ObservableObject {
         addObservers(for: playerItem)
         
         if !playImmediately {
-            // FIX: Set transition flag and use cancellable delayed task
             isPlayingTransition = true
             
             let workItem = DispatchWorkItem { [weak self] in
                 guard let self = self else { return }
                 
-                // Check if this specific task is still the current one
                 guard self.delayedPlayTask != nil && !self.delayedPlayTask!.isCancelled else {
                     print("Delayed playAtIndex task was cancelled")
                     self.isPlayingTransition = false
@@ -140,7 +135,6 @@ class PlayerVM: NSObject, ObservableObject {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: workItem)
             
         } else {
-            // FIX: Immediate execution
             isPlayingTransition = true
             
             self.createPlayer(with: playerItem)
@@ -388,7 +382,6 @@ class PlayerVM: NSObject, ObservableObject {
     
     func getTrack() -> SongModel? {
         guard playIndex >= 0 && playIndex < data.count else { return nil }
-        // FIX: Don't update currentTrack here, it should be set in playAtIndex
         return self.data[playIndex]
     }
     
@@ -496,7 +489,6 @@ class PlayerVM: NSObject, ObservableObject {
     
     func unShufflePlaylist() {
         guard let currentTrack = self.getTrack() else { return }
-        
         self.data = self.normalPlayList
         
         for (index, track) in self.data.enumerated() {

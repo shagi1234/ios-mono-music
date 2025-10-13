@@ -255,21 +255,21 @@ struct MainView: View {
                 .dragToDismiss(true)
         })
         .fullScreenCover(isPresented: $showArtists){
-            MoreView(song: playervm.bottomSheetSong ?? SongModel.example, isArtists: true) {
+            MoreView(song: $playervm.bottomSheetSong, isArtists: true) {
                 showArtists.toggle()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                     withAnimation(Animation.spring(response: 0.5, dampingFraction: 0.85)){
                         vm.expand = false
                     }
                 }
-            }closeButtonCallBack: {
+            } closeButtonCallBack: {
                 showArtists.toggle()
                 playervm.bottomSheetSong = nil
                 
             }
         }
         .fullScreenCover(isPresented: $songBSPresented) {
-            MoreView(song: playervm.bottomSheetSong ?? SongModel.example) {
+            MoreView(song: $playervm.bottomSheetSong) {
                 songBSPresented.toggle()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                     withAnimation(Animation.spring(response: 0.45, dampingFraction: 0.85)){
@@ -394,6 +394,18 @@ struct MainView: View {
        
     }
 }
+
+//SubsEndView()
+//    .preferredColorScheme(.dark)
+//    .backport.navigationDestination(for: Coordinator.Page.self) { page in
+//        coordinator.view(for: page)
+//    }
+//    .onAppear {
+//        print("⚠️ Showing Subscription End View")
+//        print("   - subsHasEnded: \(subsHasEnded)")
+//        print("   - subsEndDate: \(subsEndDate)")
+//        print("   - hasSubscriptionExpired: \(vm.hasSubscriptionExpired())")
+//    }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {

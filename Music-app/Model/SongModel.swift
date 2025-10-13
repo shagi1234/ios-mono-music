@@ -16,6 +16,7 @@ struct SongModel: Codable,  Identifiable{
     
     var id: Int64
     var name: String
+    var isLiked: Bool?
     var image: String
     var artists: [ArtistModel]
     var albumId: Int64?
@@ -36,6 +37,7 @@ struct SongModel: Codable,  Identifiable{
         case localId = "local_id"
         case localPath = "local_path"
         case year = "year"
+        case isLiked = "is_liked"
     }
 
     static let example = SongModel(id: 199, name: "Public Service Announcement", image: "/media/images/songs/song_scover_cLm90vs.jpeg", artists: [.example], albumId: 1, audio:  "/media/audio/songs/01_-_Public_Service_Announcement.mp3", year: 2015)

@@ -47,6 +47,9 @@ enum Endpoints {
     case similarArtists(id: Int64)
     case similarAlbums(id: Int64)
     case similarPlaylists(id: Int64)
+    case addToFav(id: Int64,action: String)
+    case getLikedSongs(_ page: Int)
+    case getLikedSongsCount
     
 }
 
@@ -126,6 +129,13 @@ extension Endpoints: EndpointProtocol {
         case .myPlaylists(let page):
             return ["page" : page]
             
+        case .addToFav(let id,let action):
+            return ["song" : id,
+                    "action" : action]
+            
+        case .getLikedSongs(let page):
+            return ["page" : page]
+            
         default:
             return nil
         }
@@ -172,12 +182,24 @@ extension Endpoints: EndpointProtocol {
         case .similarAlbums(let id): return BASE_URL + "/similar-albums/\(id)"
         case .similarArtists(let id): return BASE_URL + "/similar-artists/\(id)"
         case .similarPlaylists(let id): return BASE_URL + "/similar-playlists/\(id)"
+        case .addToFav: return BASE_URL + "/like-song"
+        case .getLikedSongs: return BASE_URL + "/liked-songs"
+        case .getLikedSongsCount: return BASE_URL + "/favorities-count"
         }
     }
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .refreshToken, .sendOtp, .checkOtp, .profileUpdate, .checkPromoCode, .playlisttoLibrary, .customPlaylisttoLibrary, .albumToLibrary, .songToPlaylist:
+        case .refreshToken,
+                .sendOtp,
+                .checkOtp,
+                .profileUpdate,
+                .checkPromoCode,
+                .playlisttoLibrary,
+                .customPlaylisttoLibrary,
+                .albumToLibrary,
+                .addToFav,
+                .songToPlaylist:
             return .post
         default:
             return .get

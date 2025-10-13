@@ -283,18 +283,19 @@ extension SearchView{
                     .multilineTextAlignment(.leading)
                     .padding(.bottom, 20)
                 ForEach(songs.enumeratedArray(), id: \.offset) { ind, i in
-                    SongItem(data: i, current: playervm.currentTrack?.id == i.id, isPlaying: playervm.isPlaying(), disabled: !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath == nil, onMore: {
+                    SongItem(data: i, current: playervm.currentTrack?.id == i.id, isPlaying: playervm.isPlaying(), disabled: !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath == nil,
+                             onMore: {
                         playervm.bottomSheetSong = i
-                    }, drag: {
-                        playervm.addUpToNext(track: i, tracklist: nil)
-                    })
-                    .pressWithAnimation {
+                    },
+                             onTap: {
                         if networkMonitor.isConnected {
                             playervm.create(index: ind, tracks: songs, tracklist: nil)
                         }else if !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath != nil{
                             playervm.create(index: ind, tracks: songs, tracklist: nil)
                         }
-                    }
+                    }, drag: {
+                        playervm.addUpToNext(track: i, tracklist: nil)
+                    })
                     .padding(.bottom, ind + 1 != songs.count ? 5 : 40)
                 }
             }

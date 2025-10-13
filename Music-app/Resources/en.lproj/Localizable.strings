@@ -66,6 +66,7 @@
 
 "close" = "Close";
 "add_to_fav" = "Add to Favourites";
+"remove_from_fav" = "Remove from Favourites";
 "main_settings" = "Main Settings";
 "add_balance" = "Manage Your Profile"; 
 "my_balance" = "My balance";
@@ -160,6 +161,7 @@
 "update_description" = "Mono Music has amazing improvements and fixes. Download the new version and get even more awesome!";
 "update_button" = "Download";
 "later_button" = "Later";
+"Favorites" = "Favorites";
 
 
 

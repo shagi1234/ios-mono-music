@@ -8,8 +8,12 @@
 import Foundation
 import Resolver
 import Kingfisher
+import SwiftUI
 
 class MainVM: ObservableObject {
+    @AppStorage(DefaultsKeys.subsEndDate.rawValue) var subsEndDate: String = ""
+    @AppStorage(DefaultsKeys.subsHasEnded.rawValue) var subsHasEnded: Bool = false
+    
     @Published var expand : Bool = false
     @Published var selectedTab = 0
     @Published var oldTab = 0
@@ -30,7 +34,7 @@ class MainVM: ObservableObject {
     @Published var downloadError : Bool = false
     @Published var downloadingPlaylist : [PlaylistModel]?
     @Published var popUpType: PopupType? = nil
-
+    
     
     init(){
         ImageCache.default.memoryStorage.config.expiration = .days(7)
@@ -44,20 +48,54 @@ class MainVM: ObservableObject {
     }
     
     func hasSubscriptionExpired() -> Bool {
-        guard !Defaults.subsEndDate.isEmpty else { return false }
+        guard !subsEndDate.isEmpty else {
+            print("⚠️ No subscription end date")
+            return false
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.timeZone = TimeZone.current
+        
+        guard let endDate = dateFormatter.date(from: subsEndDate) else {
+            print("❌ Failed to parse date: \(subsEndDate)")
+            return false
+        }
+        
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone.current
+        
+        guard let endOfDay = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: endDate) else {
+            print("❌ Failed to set end of day")
+            return false
+        }
         
         let currentDate = Date()
-        let endDate = dateFromString(Defaults.subsEndDate)
+        let hasExpired = currentDate > endOfDay
         
-        return currentDate >= endDate
+        print("📅 Subscription expired check:")
+        print("   - Current: \(currentDate)")
+        print("   - End Date: \(subsEndDate) at \(endOfDay)")
+        print("   - Has Expired: \(hasExpired)")
+        
+        return hasExpired
     }
     
     func checkSubscriptionStatus() {
-        if hasSubscriptionExpired() {
+        let expired = hasSubscriptionExpired()
+        
+        print("🔍 Checking subscription status...")
+        print("   - subsEndDate: \(subsEndDate)")
+        print("   - Currently marked as expired: \(subsHasEnded)")
+        print("   - Actually expired: \(expired)")
+        
+        if subsHasEnded != expired {
+            print("   ⚡️ Updating subsHasEnded from \(self.subsHasEnded) to \(expired)")
             DispatchQueue.main.async {
-                Defaults.subsHasEnded = true
-                Defaults.subsType = ""
+                self.subsHasEnded = expired
             }
+        } else {
+            print("   ✓ No update needed - subsHasEnded already correct")
         }
     }
     

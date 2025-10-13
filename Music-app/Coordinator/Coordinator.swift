@@ -22,6 +22,7 @@ class Coordinator: ObservableObject {
         case register
         case contactUs
         case subsription
+        case likedSongs
     }
     
     @Published var paths = [NavigationPath(), NavigationPath(), NavigationPath()]
@@ -34,6 +35,8 @@ class Coordinator: ObservableObject {
             ArtistView(vm: ArtistVM(id: id))
         case .playlist(let type, let id):
             PlaylistView(vm: PlaylistVM(type: type, id: id))
+        case .likedSongs:
+            LikedSongsView()
         case .myPlaylist(let id):
             MyPlaylistView(vm: PlaylistVM(type: .local, id: id))
         case .settings:

@@ -44,16 +44,20 @@ struct HomeView: View {
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     LazyHGrid(rows: rows, alignment: .top, spacing: 10) {
                                         ForEach(data.hitSongs.enumeratedArray(), id: \.offset) { ind, i in
-                                            SongItem(data: i, current: playervm.currentTrack?.id == i.id , isPlaying: playervm.isPlaying(), disabled: !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath == nil, onMore: {
+                                            SongItem(data: i,
+                                                     current: playervm.currentTrack?.id == i.id ,
+                                                     isPlaying: playervm.isPlaying(),
+                                                     disabled: !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath == nil,
+                                                     onMore: {
                                                 playervm.bottomSheetSong = i
-                                            }).frame(width: UIScreen.main.bounds.width - 80)
-                                                .pressWithAnimation {
-                                                    if networkMonitor.isConnected {
-                                                        playervm.create(index: ind, tracks: data.hitSongs, tracklist: nil)
-                                                    }else if !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath != nil{
-                                                        playervm.create(index: ind, tracks: data.hitSongs, tracklist: nil)
-                                                    }
+                                            }, onTap: {
+                                                if networkMonitor.isConnected {
+                                                    playervm.create(index: ind, tracks: data.hitSongs, tracklist: nil)
+                                                }else if !networkMonitor.isConnected && AppDatabase.shared.getSong(id: i.id)?.localPath != nil{
+                                                    playervm.create(index: ind, tracks: data.hitSongs, tracklist: nil)
                                                 }
+                                            }
+                                            ).frame(width: UIScreen.main.bounds.width - 80)
                                         }
                                     }
                                     .frame(height: 300)
@@ -61,7 +65,7 @@ struct HomeView: View {
                                 }
                             }.padding(.bottom, 20)
                         }
-        
+                        
                         if !data.topPlaylists.isEmpty {
                             ScrollableHStack(title: "top_playlists", spacing: 0) {
                                 
@@ -87,7 +91,7 @@ struct HomeView: View {
                                         .lineLimit(1)
                                         .font(.bold_22)
                                         .foregroundColor(.white)
-                                        
+                                    
                                     
                                 }
                                 .padding(.horizontal, 20)

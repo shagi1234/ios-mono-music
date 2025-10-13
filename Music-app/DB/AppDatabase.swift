@@ -89,6 +89,12 @@ struct AppDatabase {
             }
         }
         
+        migrator.registerMigration("addIsLikedColumn") { db in
+            try db.alter(table: "songModel") { t in
+                t.add(column: "is_liked", .boolean)
+            }
+        }
+        
         return migrator
     }
 }

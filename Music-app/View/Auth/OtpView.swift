@@ -175,27 +175,21 @@ struct OtpView: View {
                     }
                     .padding(.horizontal, 20)
                     .frame(maxWidth: .infinity,
-                           //                               minHeight: UIScreen.main.bounds.height - geo.safeAreaInsets.bottom-geo.safeAreaInsets.top - 60,
                            maxHeight: .infinity)
                 }
                 .onTapGesture { hideKeyboard() }
             }
             .preferredColorScheme(.dark)
-            .onChange(of: vm.success) { _ in
-                if vm.loggedFirstTime {
-                    coordinator.navigateTo(tab: 0, page: .register)
-                    vm.otpText = ""
-                }else if !vm.loggedFirstTime  && Defaults.subsType == ""{
-                    coordinator.navigateTo(tab: 0, page: .subsription)
-                }else if !vm.loggedFirstTime && !Defaults.subsHasEnded.description.isEmpty {
-                    Defaults.logged = true
-                }
-            }
+            // ❌ REMOVED: .onChange(of: vm.success) - BaseView handles all navigation now
             .onAppear{
                 isKeyboardShowing = true
                 if vm.timer == nil {
                     vm.startTimer()
                 }
+                print("📱 OTP View appeared")
+            }
+            .onDisappear {
+                print("👋 OTP View disappeared")
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

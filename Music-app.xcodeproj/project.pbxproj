@@ -150,6 +150,10 @@
 		D00A4C702E84D4ED00A27565 /* AppLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A4C6F2E84D4E700A27565 /* AppLoadingView.swift */; };
 		D00A4C772E84D5F100A27565 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A4C762E84D5F100A27565 /* LottieView.swift */; };
 		D00A4C9F2E891A9E00A27565 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = D00A4C9E2E891A9E00A27565 /* loading.json */; };
+		D0212B712E8C7BE9009271BC /* AddToFavResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0212B702E8C7BE6009271BC /* AddToFavResponse.swift */; };
+		D0212B732E8C922F009271BC /* LikedSongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0212B722E8C922F009271BC /* LikedSongsView.swift */; };
+		D0212B752E8C97CE009271BC /* FavoritesPlaylistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0212B742E8C97CE009271BC /* FavoritesPlaylistItem.swift */; };
+		D05AB0472E8B2C7800CCA1DD /* FavVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05AB0462E8B2C7000CCA1DD /* FavVM.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -297,6 +301,10 @@
 		D00A4C6F2E84D4E700A27565 /* AppLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLoadingView.swift; sourceTree = "<group>"; };
 		D00A4C762E84D5F100A27565 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		D00A4C9E2E891A9E00A27565 /* loading.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
+		D0212B702E8C7BE6009271BC /* AddToFavResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToFavResponse.swift; sourceTree = "<group>"; };
+		D0212B722E8C922F009271BC /* LikedSongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedSongsView.swift; sourceTree = "<group>"; };
+		D0212B742E8C97CE009271BC /* FavoritesPlaylistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPlaylistItem.swift; sourceTree = "<group>"; };
+		D05AB0462E8B2C7000CCA1DD /* FavVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -419,6 +427,7 @@
 		8BE714D62A8B6B4600313FFB /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				D0212B742E8C97CE009271BC /* FavoritesPlaylistItem.swift */,
 				D00A4C762E84D5F100A27565 /* LottieView.swift */,
 				D00A4C6F2E84D4E700A27565 /* AppLoadingView.swift */,
 				D00A4C692E84C62B00A27565 /* BottomSheetView.swift */,
@@ -461,6 +470,7 @@
 		8BE714D72A8B6B5100313FFB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D0212B722E8C922F009271BC /* LikedSongsView.swift */,
 				D00A4C632E84BE5F00A27565 /* UpdateInfo.swift */,
 				55DE215E2C79D5240010E2D2 /* AppDelegate.swift */,
 				8BB89F872A8B6497005F39F6 /* BaseView.swift */,
@@ -485,6 +495,7 @@
 		8BE714D82A8B6B6100313FFB /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				D05AB0462E8B2C7000CCA1DD /* FavVM.swift */,
 				D00A4C6B2E84C85600A27565 /* Tools.swift */,
 				C0C835992AC7333D00C1FFAD /* Auth */,
 				8BE715302A8E602B00313FFB /* MainVM.swift */,
@@ -505,6 +516,7 @@
 		8BE714D92A8B6B6C00313FFB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D0212B702E8C7BE6009271BC /* AddToFavResponse.swift */,
 				8BE715382A8F692700313FFB /* TabItemModel.swift */,
 				C0A4C63E2AB983E500EAC1C0 /* HomeModel.swift */,
 				C05CEFFC2AD44F6D007C69B2 /* SearchModel.swift */,
@@ -766,6 +778,7 @@
 				C05CF0012AD5BEAF007C69B2 /* Background.swift in Sources */,
 				558997482BD2EFFA00B10917 /* SettingVM.swift in Sources */,
 				C00158682AFA9BE900F7CA16 /* ViewModifiers.swift in Sources */,
+				D05AB0472E8B2C7800CCA1DD /* FavVM.swift in Sources */,
 				C0271F9C2AC0AEF300B21857 /* TimeInterval.swift in Sources */,
 				C0C835982AC7333600C1FFAD /* ArtistVM.swift in Sources */,
 				8BE714E02A8B6F9500313FFB /* Resolver.swift in Sources */,
@@ -773,6 +786,7 @@
 				8BE7150F2A8E174700313FFB /* UINavigationController.swift in Sources */,
 				5518FCF32C63060500045040 /* CustomPlaylistModel.swift in Sources */,
 				55513D1D2C66E0CA00EE05D1 /* MultilineTextField.swift in Sources */,
+				D0212B752E8C97CE009271BC /* FavoritesPlaylistItem.swift in Sources */,
 				8BE714F02A8B933400313FFB /* LoginVm.swift in Sources */,
 				8BE715082A8CD5EB00313FFB /* Network.swift in Sources */,
 				8BE715392A8F692700313FFB /* TabItemModel.swift in Sources */,
@@ -780,6 +794,7 @@
 				555BBE742C24CED800BCA85D /* SubscriptionModel.swift in Sources */,
 				555F64022BA435FE00A5C03F /* PlaylistCategory.swift in Sources */,
 				55FC507D2CEB6A880061F02A /* SignUpVM.swift in Sources */,
+				D0212B712E8C7BE9009271BC /* AddToFavResponse.swift in Sources */,
 				8BE715132A8E1F8A00313FFB /* SearchBar.swift in Sources */,
 				55E8FB1E2BB2AC9200A90314 /* SignUpView.swift in Sources */,
 				555B3F7D2C0BDDE500ECC75E /* NetworkMonitor.swift in Sources */,
@@ -799,6 +814,7 @@
 				C0CF590D2B26E10800AFDCE5 /* MarqueeText.swift in Sources */,
 				C0EDF90A2ADACFCF00738160 /* MyPlaylistView.swift in Sources */,
 				C078E5D12ABCB027008A8298 /* AppDatabase.swift in Sources */,
+				D0212B732E8C922F009271BC /* LikedSongsView.swift in Sources */,
 				8BE714DE2A8B6E8F00313FFB /* Font.swift in Sources */,
 				D00A4C622E84BC5000A27565 /* AppUpdateManager.swift in Sources */,
 				554145872BF804830049E66B /* PopUpModel.swift in Sources */,

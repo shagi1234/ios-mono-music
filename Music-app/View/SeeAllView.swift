@@ -47,13 +47,11 @@ struct SeeAllView: View {
                         ForEach(data.enumeratedArray(), id: \.offset) { ind, i in
                             SongItem(data: i, current: playervm.currentTrack?.id == i.id, isPlaying: playervm.isPlaying(),  onMore: {
                                 playervm.bottomSheetSong = i
+                            },onTap: {
+                                playervm.create(index: ind, tracks: data, tracklist: nil)
                             }, drag: {
                                 playervm.addUpToNext(track: i, tracklist: nil)
                             })
-                            .pressWithAnimation {
-                                playervm.create(index: ind, tracks: data, tracklist: nil)
-                            }
-                            
                             .onAppear{
                                 if data.last?.id == i.id && vm.type == .singles ? vm.canLoadMoreSingles : vm.canLoadMoreSongs {
                                     vm.getData(page: vm.page + 1)
