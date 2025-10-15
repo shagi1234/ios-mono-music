@@ -38,6 +38,7 @@ class MainVM: ObservableObject {
     
     init(){
         ImageCache.default.memoryStorage.config.expiration = .days(7)
+        checkSubscriptionStatus(synchronous: true)
     }
     
     func getDate() -> String{
@@ -49,53 +50,41 @@ class MainVM: ObservableObject {
     
     func hasSubscriptionExpired() -> Bool {
         guard !subsEndDate.isEmpty else {
-            print("⚠️ No subscription end date")
             return false
         }
-        
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         dateFormatter.timeZone = TimeZone.current
-        
+
         guard let endDate = dateFormatter.date(from: subsEndDate) else {
-            print("❌ Failed to parse date: \(subsEndDate)")
             return false
         }
-        
+
         var calendar = Calendar.current
         calendar.timeZone = TimeZone.current
-        
+
         guard let endOfDay = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: endDate) else {
-            print("❌ Failed to set end of day")
             return false
         }
-        
+
         let currentDate = Date()
         let hasExpired = currentDate > endOfDay
-        
-        print("📅 Subscription expired check:")
-        print("   - Current: \(currentDate)")
-        print("   - End Date: \(subsEndDate) at \(endOfDay)")
-        print("   - Has Expired: \(hasExpired)")
-        
+
         return hasExpired
     }
     
-    func checkSubscriptionStatus() {
+    func checkSubscriptionStatus(synchronous: Bool = false) {
         let expired = hasSubscriptionExpired()
-        
-        print("🔍 Checking subscription status...")
-        print("   - subsEndDate: \(subsEndDate)")
-        print("   - Currently marked as expired: \(subsHasEnded)")
-        print("   - Actually expired: \(expired)")
-        
+
         if subsHasEnded != expired {
-            print("   ⚡️ Updating subsHasEnded from \(self.subsHasEnded) to \(expired)")
-            DispatchQueue.main.async {
+            if synchronous {
                 self.subsHasEnded = expired
+            } else {
+                DispatchQueue.main.async {
+                    self.subsHasEnded = expired
+                }
             }
-        } else {
-            print("   ✓ No update needed - subsHasEnded already correct")
         }
     }
     

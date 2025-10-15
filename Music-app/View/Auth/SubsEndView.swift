@@ -73,16 +73,7 @@ struct SubsEndView: View {
                     .frame(maxHeight: .infinity)
             }
         }
-        .onAppear {
-            print("👁️ SubsEndView DID APPEAR on screen!")
-            print("   - View is now VISIBLE to user")
-            print("   - logged: \(logged)")
-            print("   - subsHasEnded: \(subsHasEnded)")
-            print("   - subsEndDate: \(subsEndDate)")
-        }
-        .onDisappear {
-            print("👋 SubsEndView disappeared from screen")
-        }
+    }
     }
 }
 

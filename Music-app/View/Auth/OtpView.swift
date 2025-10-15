@@ -186,10 +186,6 @@ struct OtpView: View {
                 if vm.timer == nil {
                     vm.startTimer()
                 }
-                print("📱 OTP View appeared")
-            }
-            .onDisappear {
-                print("👋 OTP View disappeared")
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

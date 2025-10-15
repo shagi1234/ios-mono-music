@@ -106,6 +106,8 @@ class Defaults {
         logged = false
         birthDay = ""
         subsEndDate = ""
+        subsType = ""
+        subsHasEnded = false
         searchHistory = []
         loggedFirstTime = false
         lang = "tk"

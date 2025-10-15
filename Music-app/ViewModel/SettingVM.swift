@@ -35,10 +35,10 @@ class SettingVM: ObservableObject{
     func getProfile(){
         inProgress = true
         noConnection = false
-        
+
         repo.getProfile() { [weak self] resp in
             self?.inProgress.toggle()
-            
+
             switch resp {
             case .success(let success):
                 self?.inProgress = false
@@ -47,6 +47,18 @@ class SettingVM: ObservableObject{
                 Defaults.birthDay = success.birthDay
                 Defaults.subsEndDate = success.subscriptionEndDate
                 Defaults.subsType = success.subscription?.name ?? ""
+
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                if let endDate = dateFormatter.date(from: success.subscriptionEndDate) {
+                    var calendar = Calendar.current
+                    calendar.timeZone = TimeZone.current
+                    if let endOfDay = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: endDate) {
+                        let hasExpired = Date() > endOfDay
+                        Defaults.subsHasEnded = hasExpired
+                    }
+                }
+
             case .failure(_):
                 self?.noConnection = true
             }
@@ -81,11 +93,27 @@ class SettingVM: ObservableObject{
             case .success(_):
                 self?.promoProgress = false
                 self?.promoMessage = "earned"
-                
-                DispatchQueue.main.async {
-                    Defaults.logged = true
+
+                self?.repo.getProfile { profileResp in
+                    switch profileResp {
+                    case .success(let profile):
+                        DispatchQueue.main.async {
+                            Defaults.fullName = profile.fullName
+                            Defaults.birthDay = profile.birthDay
+                            Defaults.subsEndDate = profile.subscriptionEndDate
+                            Defaults.subsType = profile.subscription?.name ?? ""
+                            Defaults.subsHasEnded = false
+                            Defaults.logged = true
+                        }
+
+                    case .failure(_):
+                        DispatchQueue.main.async {
+                            Defaults.subsHasEnded = false
+                            Defaults.logged = true
+                        }
+                    }
                 }
-                
+
             case .failure(_):
                 self?.promoMessage = "failMessage"
                 self?.promoProgress = false
